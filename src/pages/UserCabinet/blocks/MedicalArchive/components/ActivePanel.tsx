@@ -18,6 +18,13 @@ export default function ActivePanel(props: PropsType) {
     "Інше",
   ]);
 
+  const [elementDisplayMode, setElementDisplayMode] = useState<"grid" | "list">(
+    "grid"
+  );
+  const [displayedElementsType, setDisplayedElementsType] = useState<
+    "files" | "folders"
+  >("files");
+
   return (
     <div className="nav-tabs__panel-container">
       {navTabs.map((item, index) => {
@@ -123,10 +130,22 @@ export default function ActivePanel(props: PropsType) {
                 </button>
 
                 <div className="functional__button files-or-folders-mode-toogle-buttons">
-                  <button className="files-mode-button button active">
+                  <button
+                    className={`files-mode-button button ${
+                      displayedElementsType === "files" && "active"
+                    }`}
+                    onClick={() => setDisplayedElementsType("files")}
+                  >
                     Файли
                   </button>
-                  <button className="folder-mode-button button">Папки</button>
+                  <button
+                    className={`files-mode-button button ${
+                      displayedElementsType === "folders" && "active"
+                    }`}
+                    onClick={() => setDisplayedElementsType("folders")}
+                  >
+                    Папки
+                  </button>
                 </div>
               </div>
             </div>
