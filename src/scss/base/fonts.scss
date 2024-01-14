@@ -1,0 +1,61 @@
+/* =============================================================== GraphikLCG ================================================================ */
+@font-face {
+  font-family: "GraphikLCG";
+  src: local("GraphikLCG-Regular"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-Regular.eot")
+      format("embedded-opentype"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-Regular.woff2") format("woff2"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-Regular.woff") format("woff"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GraphikLCG";
+  src: local("GraphikLCG-Medium"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-Medium.eot")
+      format("embedded-opentype"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-Medium.woff2") format("woff2"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-Medium.woff") format("woff"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GraphikLCG";
+  src: local("GraphikLCG-SemiBold"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-SemiBold.eot")
+      format("embedded-opentype"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-SemiBold.woff2") format("woff2"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-SemiBold.woff") format("woff"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GraphikLCG";
+  src: local("GraphikLCG-Bold"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-Bold.eot")
+      format("embedded-opentype"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-Bold.woff2") format("woff2"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-Bold.woff") format("woff"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GraphikLCG";
+  src: local("GraphikLCG-ExtraBold"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-ExtraBold.eot")
+      format("embedded-opentype"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-ExtraBold.woff2") format("woff2"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-ExtraBold.woff") format("woff"),
+    url("./../../fonts/GraphikLCG/GraphikLCG-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+/* ===================================================================================================================================== */

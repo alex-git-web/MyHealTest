@@ -1,0 +1,31 @@
+// @font-face {
+//   font-family: "Graphik LCG";
+//   src: url("https://db.onlinewebfonts.com/t/ca3d10781128664daddf89bf2e2d1305.eot");
+//   src: url("https://db.onlinewebfonts.com/t/ca3d10781128664daddf89bf2e2d1305.eot?#iefix")
+//       format("embedded-opentype"),
+//     url("https://db.onlinewebfonts.com/t/ca3d10781128664daddf89bf2e2d1305.woff2")
+//       format("woff2"),
+//     url("https://db.onlinewebfonts.com/t/ca3d10781128664daddf89bf2e2d1305.woff")
+//       format("woff"),
+//     url("https://db.onlinewebfonts.com/t/ca3d10781128664daddf89bf2e2d1305.ttf")
+//       format("truetype"),
+//     url("https://db.onlinewebfonts.com/t/ca3d10781128664daddf89bf2e2d1305.svg#Graphik LCG Regular Regular")
+//       format("svg");
+// }
+@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap");
+
+// @import "./base/fonts.scss";
+@import "./base/normalize.scss";
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(90deg, #e9eeea 16.18%, #e9f0e2 100%);
+}
+
+.main-container {
+  width: auto;
+  height: max-content;
+}

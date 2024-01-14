@@ -1,0 +1,159 @@
+.medical-archive__container {
+  .nav-tabs__panel-container {
+    background-color: #fff;
+    border-radius: 22px;
+    padding: 15px 20px 25px;
+
+    .panel {
+      display: none;
+
+      .header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        &__title {
+          margin: 0;
+          color: #000;
+          font-family: "Hanken Grotesk", sans-serif;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 1; /* 100% */
+          letter-spacing: -0.6px;
+          padding-right: 10%;
+          vertical-align: middle;
+        }
+
+        .functional-buttons {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          .button {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-radius: 30px;
+            border: 1px solid #d2e1f5;
+            background: #fff;
+            padding: 10px;
+
+            &:hover {
+              opacity: 0.7;
+              cursor: pointer;
+            }
+
+            &:not(:last-child) {
+              margin-right: 6px;
+            }
+
+            &__icon {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+
+            &__caption {
+              color: #173236;
+              text-align: center;
+              font-family: "Hanken Grotesk", sans-serif;
+              font-size: 12px;
+              font-style: normal;
+              font-weight: 500;
+              line-height: 1; /* 100% */
+              letter-spacing: -0.36px;
+              margin-left: 6px;
+            }
+          }
+        }
+      }
+
+      .sub-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        .nav-tabs {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          padding-left: 0;
+          // padding-right: 10%;
+
+          &__tab-item {
+            border-radius: 20px;
+            padding: 13px 15px;
+
+            &:not(:last-child) {
+              margin-right: 10px;
+            }
+
+            &.active {
+              background: #29f499;
+            }
+          }
+        }
+
+        .functional-buttons {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          &:not(:last-child) {
+            margin-right: 10px;
+          }
+
+          .view-mode-button {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: #173236;
+            border: none;
+            margin-right: 12px;
+
+            &:hover {
+              opacity: 0.7;
+              cursor: pointer;
+            }
+          }
+
+          .files-or-folders-mode-toogle-buttons {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .button {
+              padding: 11px 10px;
+              color: #173236;
+              background: transparent;
+              border-radius: 20px;
+              outline: none;
+              border: none;
+
+              &:hover {
+                cursor: pointer;
+              }
+
+              &.active {
+                color: #fff;
+                background: #173236;
+              }
+            }
+          }
+        }
+      }
+
+      &.active {
+        display: block;
+      }
+    }
+  }
+}
