@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import FlatList from "flatlist-react";
-import { FileCardType } from "../types";
-import FileCard from "./cards/FileCard";
+import { FileCardType } from "../../types";
+import FileCard from "./components/FileCard";
 
-export default function SectionContent() {
+export default function ContentSection() {
   const [filesCards, setFilesCards] = useState<FileCardType[]>([
     {
       id: 1,
@@ -45,10 +45,18 @@ export default function SectionContent() {
       medicalClinicAddress: "Луцьк, пр-т Волі, 14",
       files: ["file 1", "file 2"],
     },
+    {
+      id: 6,
+      createDate: "12.11.2023, 11:00",
+      title: "Кров'яний тиск",
+      bloodPressureType: "Систолічний (верхній)",
+      bloodPressureValue: "130 мм рт.ст.",
+      files: ["file 1", "file 1", "file 1", "file 1", "file 1"],
+    },
   ]);
 
   return (
-    <ul className="active-panel-section-content__container">
+    <ul className="active-panel-content-section__container">
       <FlatList
         list={filesCards}
         renderItem={(item, index) => <FileCard key={index} data={item} />}

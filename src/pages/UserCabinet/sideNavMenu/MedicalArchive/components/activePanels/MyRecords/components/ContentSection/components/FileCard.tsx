@@ -1,5 +1,5 @@
 import React from "react";
-import { FileCardType } from "../../types";
+import { FileCardType } from "../../../types";
 
 type PropsType = {
   data: FileCardType;
@@ -32,30 +32,44 @@ export default function FileCard(props: PropsType) {
         </button>
       </header>
 
-      <h4 className="file-card__info-caption">{data.bloodPressureType}</h4>
-      <h4 className="file-card__info-sub-caption">{data.bloodPressureValue}</h4>
-      <button className="file-card__open-files-btn">
-        <span className="open-file-btn__icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-          >
-            <path
-              d="M10.9669 3.80694L4.22383 10.3093C3.77694 10.7402 3.77694 11.4389 4.22383 11.8698C4.67073 12.3007 5.39529 12.3007 5.84218 11.8698L12.5853 5.36749C13.4791 4.50562 13.4791 3.10825 12.5853 2.24638C11.6915 1.38451 10.2424 1.38451 9.3486 2.24638L2.60549 8.7487C1.2648 10.0415 1.2648 12.1376 2.60549 13.4304C3.94617 14.7232 6.11984 14.7232 7.46053 13.4304L14.4 6.73872"
-              stroke="#173236"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-            />
-          </svg>
-        </span>
+      <footer className="file-card__footer footer">
+        <h4 className="footer__info-caption">
+          {data.bloodPressureType
+            ? data.bloodPressureType
+            : data.doctorName
+            ? data.doctorName
+            : data.medicalClinicTitle && data.medicalClinicTitle}
+        </h4>
+        <h4 className="footer__info-sub-caption">
+          {data.bloodPressureValue
+            ? data.bloodPressureValue
+            : data.doctorSpeciality
+            ? data.doctorSpeciality
+            : data.medicalClinicAddress && data.medicalClinicAddress}
+        </h4>
+        <button className="footer__open-files-btn open-file-btn">
+          <span className="open-file-btn__icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+            >
+              <path
+                d="M10.9669 3.80694L4.22383 10.3093C3.77694 10.7402 3.77694 11.4389 4.22383 11.8698C4.67073 12.3007 5.39529 12.3007 5.84218 11.8698L12.5853 5.36749C13.4791 4.50562 13.4791 3.10825 12.5853 2.24638C11.6915 1.38451 10.2424 1.38451 9.3486 2.24638L2.60549 8.7487C1.2648 10.0415 1.2648 12.1376 2.60549 13.4304C3.94617 14.7232 6.11984 14.7232 7.46053 13.4304L14.4 6.73872"
+                stroke="#173236"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+            </svg>
+          </span>
 
-        <span className="open-file-btn__caption">
-          {data.files.length} Файл(и)
-        </span>
-      </button>
+          <span className="open-file-btn__caption">
+            {data.files.length} Файл(и)
+          </span>
+        </button>
+      </footer>
     </div>
   );
 }

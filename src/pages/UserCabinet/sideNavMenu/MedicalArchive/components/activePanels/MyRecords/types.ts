@@ -10,3 +10,6 @@ export type FileCardType = {
   medicalClinicAddress?: string;
   files: any[];
 };
+
+export type ContentElementsDisplayModeType = "grid" | "list";
+export type ContentDisplayedElementsType = "files" | "folders";
