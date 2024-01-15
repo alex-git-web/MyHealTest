@@ -1,0 +1,74 @@
+.medical-archive__container {
+  .active-panel-section-content__container {
+    padding-left: 0;
+
+    .file-card {
+      border-radius: 20px;
+      border: 1px solid #e5eeff;
+      background: #fff;
+      padding: 10px;
+
+      .header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        span {
+          padding-right: 10px;
+          .header__create-date {
+            margin: 0;
+            margin-bottom: 10px;
+            color: #1e1e1e;
+            font-family: "Hanken Grotesk", sans-serif;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 1; /* 100% */
+          }
+
+          .header__title {
+            margin: 0;
+            color: #000;
+            font-family: "Hanken Grotesk", sans-serif;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 1; /* 100% */
+            letter-spacing: -0.42px;
+          }
+        }
+
+        &__kebab-menu-btn {
+          width: 40px;
+          height: 40px;
+          border-radius: 30px;
+          border: 1px solid #d2e1f5;
+          background: #fff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          &:hover {
+            opacity: 0.7;
+            cursor: pointer;
+          }
+        }
+      }
+
+      &__info-caption {
+      }
+
+      &__info-sub-caption {
+      }
+
+      .open-files-btn {
+        &__icon {
+        }
+
+        &__caption {
+        }
+      }
+    }
+  }
+}

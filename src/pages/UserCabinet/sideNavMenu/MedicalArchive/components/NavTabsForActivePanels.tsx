@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ActivePanel from "./ActivePanel";
+import ActivePanel from "./activePanels/MyRecords/MyRecordsPanel";
 
 type PropsType = {
   navTabs: string[];
@@ -7,11 +7,11 @@ type PropsType = {
   setActiveTabIndex: Function;
 };
 
-export default function NavTabs(props: PropsType) {
+export default function NavTabsForActivePanels(props: PropsType) {
   const { navTabs, activeTabIndex, setActiveTabIndex } = props;
 
   return (
-    <section className="nav-tabs__container">
+    <section className="nav-tabs-for-active-panels__container">
       <ul className="nav-tabs-list">
         {navTabs.map((item, index) => {
           return (
