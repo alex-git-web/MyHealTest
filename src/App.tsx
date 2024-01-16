@@ -1,6 +1,6 @@
 import React from "react";
 import "./build/css/index.css";
-import MedicalArchive from "./pages/UserCabinet/sideNavMenu/MedicalArchive/MedicalArchive";
+import MedicalArchive from "./pages/UserCabinet/sideNavMenuItems/MedicalArchive/MedicalArchive";
 
 function App() {
   return (

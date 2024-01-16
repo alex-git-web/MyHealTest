@@ -1,0 +1,13 @@
+@import "./components/navTabsForActivePanel.scss";
+@import "./components/activePanel.scss";
+
+%medicalArchiveContainer {
+  .medical-archive__container {
+    width: auto;
+    height: max-content;
+    padding: 0 50px;
+
+    @extend %navTabsForActivePanel;
+    @extend %activePanel;
+  }
+}
