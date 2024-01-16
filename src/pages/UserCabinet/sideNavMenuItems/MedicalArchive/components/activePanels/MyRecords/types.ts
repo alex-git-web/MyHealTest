@@ -11,5 +11,12 @@ export type FileCardType = {
   files: any[];
 };
 
+export type FolderCardType = {
+  id: number;
+  title: string;
+  direction: string;
+  files: any[];
+};
+
 export type ContentElementsDisplayModeType = "grid" | "list";
 export type ContentDisplayedElementsType = "files" | "folders";

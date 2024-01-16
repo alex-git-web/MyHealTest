@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { FileCardType } from "../../../types";
+import CardKebabMenuPopUp from "./CardKebabMenuPopUp";
 
 type PropsType = {
   data: FileCardType;
@@ -7,6 +8,8 @@ type PropsType = {
 
 export default function FileCard(props: PropsType) {
   const { data } = props;
+  const [isKebabMenuBtnClicked, setIsKebabMenuBtnClicked] =
+    useState<boolean>(false);
 
   return (
     <div className="file-card__container file-card">
@@ -16,7 +19,12 @@ export default function FileCard(props: PropsType) {
           <h4 className="header__title">{data.title}</h4>
         </span>
 
-        <button className="header__kebab-menu-btn">
+        <button
+          className={`"header__kebab-menu-btn kebab-menu-btn ${
+            isKebabMenuBtnClicked ? " active" : ""
+          }`}
+          onClick={() => setIsKebabMenuBtnClicked((state) => !state)}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -30,6 +38,8 @@ export default function FileCard(props: PropsType) {
             />
           </svg>
         </button>
+
+        {isKebabMenuBtnClicked && <CardKebabMenuPopUp />}
       </header>
 
       <footer className="file-card__footer footer">
@@ -47,8 +57,8 @@ export default function FileCard(props: PropsType) {
             ? data.doctorSpeciality
             : data.medicalClinicAddress && data.medicalClinicAddress}
         </h4>
-        <button className="footer__open-files-btn open-file-btn">
-          <span className="open-file-btn__icon">
+        <button className="footer__open-files-btn open-files-btn">
+          <span className="open-files-btn__icon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
