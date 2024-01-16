@@ -1,18 +1,23 @@
 import React, { useState } from "react";
-import { FolderCardType } from "../../../types";
+import { ContentElementsDisplayModeType, FolderCardType } from "../../../types";
 import CardKebabMenuPopUp from "./CardKebabMenuPopUp";
 
 type PropsType = {
   data: FolderCardType;
+  displayMode: ContentElementsDisplayModeType;
 };
 
 export default function FolderCard(props: PropsType) {
-  const { data } = props;
+  const { data, displayMode } = props;
   const [isKebabMenuBtnClicked, setIsKebabMenuBtnClicked] =
     useState<boolean>(false);
 
   return (
-    <div className="folder-card__container folder-card">
+    <div
+      className={`folder-card__container file-card ${
+        displayMode === "grid" ? "grid" : "list"
+      }`}
+    >
       <header className="folder-card__header header">
         <span className="header__icon">
           <svg

@@ -1,18 +1,8 @@
-%card {
-  border-radius: 20px;
-  border: 1px solid #e5eeff;
-  background: #fff;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 %kebabMenuBtn {
   position: relative;
 
   .kebab-menu-btn {
-    flex: 0 0 40px;
+    width: 40px;
     height: 40px;
     border-radius: 30px;
     border: 1px solid #d2e1f5;
@@ -20,6 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 
     &:hover {
       opacity: 0.7;
@@ -40,12 +31,12 @@
   .pop-up {
     position: absolute;
     top: 55px;
-    right: calc(-53% + 40px);
-    width: 120px;
+    right: -60px;
+    width: 160px;
     border-radius: 20px;
     background: #fff;
     box-shadow: 0px 10px 40px 0px rgba(23, 50, 54, 0.15);
-    padding: 20px;
+    padding: 20px 0px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -60,7 +51,7 @@
       transform: translate(-50%);
     }
 
-    & > button {
+    li {
       color: #173236;
       font-family: "Hanken Grotesk", sans-serif;
       font-size: 14px;
@@ -69,7 +60,7 @@
       line-height: 1; /* 100% */
       letter-spacing: -0.42px;
       background: #fff;
-      padding: 0;
+      padding: 0 20px;
       text-align: start;
       display: flex;
       align-items: center;
@@ -80,7 +71,6 @@
       }
 
       &:hover {
-        opacity: 0.7;
         cursor: pointer;
       }
     }
@@ -92,49 +82,163 @@
       }
     }
 
-    &__share-btn {
+    &__share-btn.share-btn {
+      z-index: 1;
+      svg {
+        margin-right: -7px;
+      }
+
+      &:hover {
+        opacity: 0.7;
+        cursor: pointer;
+      }
+    }
+
+    &__share-btn.share-btn:hover ~ .context-menu {
+      opacity: 1;
+      pointer-events: all;
     }
 
     &__rename-btn {
+      &:hover {
+        opacity: 0.7;
+        cursor: pointer;
+      }
     }
 
     &__delete-btn {
+      &.disabled {
+        color: #90a4be;
+      }
+
+      &:hover:not(.disabled) {
+        opacity: 0.7;
+        cursor: pointer;
+      }
+    }
+
+    .context-menu {
+      position: absolute;
+      right: -180px;
+      bottom: 70px;
+      width: 180px;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0px 10px 40px 0px rgba(23, 50, 54, 0.15);
+      padding: 20px;
+      box-sizing: border-box;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 3;
+
+      &:hover {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      & > li {
+        padding: 0;
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+
+      &__open-access-btn {
+      }
+
+      &__create-link-btn {
+      }
     }
   }
 }
 
-%openFilesBtn {
-  flex: 0 0 126px;
-  height: 40px;
-  margin-top: 20px;
-  border-radius: 30px;
-  border: 1px solid #d2e1f5;
-  background: #fff;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 12px 20px;
-
-  &:hover {
-    opacity: 0.7;
-    cursor: pointer;
-  }
-
-  .open-files-btn__icon {
+@mixin openFilesBtn($marginTop: 20px) {
+  .open-files-btn {
+    width: max-content;
+    height: 40px;
+    margin-top: $marginTop;
+    border-radius: 30px;
+    border: 1px solid #d2e1f5;
+    background: #fff;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
-    margin-right: 6px;
-  }
+    padding: 12px 20px;
 
-  .open-file-btn__caption {
-    color: #1e1e1e;
+    &:hover {
+      opacity: 0.7;
+      cursor: pointer;
+    }
+
+    .open-files-btn__icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 6px;
+    }
+
+    .open-file-btn__caption {
+      color: #1e1e1e;
+      font-family: "Hanken Grotesk", sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 1; /* 100% */
+      letter-spacing: -0.42px;
+    }
+  }
+}
+
+%fileCardTitle {
+  .file-card__title {
+    margin: 0;
+    color: #000;
     font-family: "Hanken Grotesk", sans-serif;
     font-size: 14px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1; /* 100% */
     letter-spacing: -0.42px;
+  }
+}
+
+@mixin fileCardInfoBlock($marginTop: 70px) {
+  .info-block {
+    &__caption {
+      margin-top: $marginTop;
+      margin-bottom: 4px;
+      color: #000;
+      font-family: "Hanken Grotesk", sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1; /* 100% */
+      letter-spacing: -0.42px;
+    }
+
+    &__sub-caption {
+      margin: 0;
+      color: #173236;
+      font-family: "Hanken Grotesk", sans-serif;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 14px; /* 116.667% */
+      letter-spacing: -0.36px;
+    }
+  }
+}
+
+%fileCardCreateDate {
+  .file-card__create-date {
+    margin: 0;
+    margin-bottom: 10px;
+    color: #1e1e1e;
+    font-family: "Hanken Grotesk", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1; /* 100% */
   }
 }
 
@@ -143,75 +247,70 @@
     padding-left: 0;
 
     .file-card {
-      @extend %card;
-
-      .header {
+      &.grid-mode {
+        border-radius: 20px;
+        border: 1px solid #e5eeff;
+        background: #fff;
+        padding: 10px;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-between;
-        align-items: flex-start;
 
-        span {
-          padding-right: 10px;
-          .header__create-date {
-            margin: 0;
-            margin-bottom: 10px;
-            color: #1e1e1e;
-            font-family: "Hanken Grotesk", sans-serif;
-            font-size: 12px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: 1; /* 100% */
+        .file-card__header {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: flex-start;
+
+          span {
+            padding-right: 10px;
+
+            @extend %fileCardTitle;
+
+            @extend %fileCardCreateDate;
           }
 
-          .header__title {
-            margin: 0;
-            color: #000;
-            font-family: "Hanken Grotesk", sans-serif;
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 1; /* 100% */
-            letter-spacing: -0.42px;
-          }
+          @extend %kebabMenuBtn;
         }
 
+        @include fileCardInfoBlock(0);
+
+        @include openFilesBtn(20);
+      }
+
+      &.list-mode {
+        width: auto;
+        border-radius: 20px;
+        border: 1px solid #e5eeff;
+        background: #fff;
+        padding: 10px;
+        display: grid;
+        grid-template-columns: 2fr 1.5fr 1fr 1fr auto;
+        grid-template-rows: 1fr;
+        align-items: center;
+
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+
+        @extend %fileCardTitle;
+        @include fileCardInfoBlock(0);
+        @extend %fileCardCreateDate;
+        @include openFilesBtn(0);
         @extend %kebabMenuBtn;
       }
-
-      .footer {
-        &__info-caption {
-          margin: 0;
-          margin-top: 70px;
-          margin-bottom: 4px;
-          color: #000;
-          font-family: "Hanken Grotesk", sans-serif;
-          font-size: 14px;
-          font-style: normal;
-          font-weight: 600;
-          line-height: 1; /* 100% */
-          letter-spacing: -0.42px;
-        }
-
-        &__info-sub-caption {
-          margin: 0;
-          color: #173236;
-          font-family: "Hanken Grotesk", sans-serif;
-          font-size: 12px;
-          font-style: normal;
-          font-weight: 500;
-          line-height: 14px; /* 116.667% */
-          letter-spacing: -0.36px;
-        }
-
-        .open-files-btn {
-          @extend %openFilesBtn;
-        }
-      }
     }
+  }
 
-    .folder-card {
-      @extend %card;
+  .folder-card {
+    &.grid-mode {
+      border-radius: 20px;
+      border: 1px solid #e5eeff;
+      background: #fff;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
 
       .header {
         display: flex;
@@ -251,12 +350,6 @@
           font-weight: 500;
           line-height: 1.16; /* 116.667% */
           letter-spacing: -0.36px;
-        }
-      }
-
-      .footer {
-        .open-files-btn {
-          @extend %openFilesBtn;
         }
       }
     }

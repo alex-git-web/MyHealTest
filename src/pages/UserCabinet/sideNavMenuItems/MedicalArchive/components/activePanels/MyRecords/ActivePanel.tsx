@@ -47,7 +47,10 @@ export default function ActivePanel(props: PropsType) {
         }
       />
 
-      <SectionContent displayedElementsType={displayedElementsType} />
+      <SectionContent
+        elementsDisplayMode={elementsDisplayMode}
+        displayedElementsType={displayedElementsType}
+      />
     </div>
   );
 }

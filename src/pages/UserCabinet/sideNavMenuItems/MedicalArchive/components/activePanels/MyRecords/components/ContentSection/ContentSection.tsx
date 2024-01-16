@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import FlatList from "flatlist-react";
 import {
   ContentDisplayedElementsType,
+  ContentElementsDisplayModeType,
   FileCardType,
   FolderCardType,
 } from "../../types";
@@ -10,11 +11,12 @@ import { FileCardsDefault, FolderCardsDefault } from "../../contentDefault";
 import FolderCard from "./components/FolderCard";
 
 type PropsType = {
+  elementsDisplayMode: ContentElementsDisplayModeType;
   displayedElementsType: ContentDisplayedElementsType;
 };
 
 export default function ContentSection(props: PropsType) {
-  const { displayedElementsType } = props;
+  const { elementsDisplayMode, displayedElementsType } = props;
 
   const [filesCards, setFilesCards] =
     useState<FileCardType[]>(FileCardsDefault);
@@ -27,19 +29,29 @@ export default function ContentSection(props: PropsType) {
       {displayedElementsType === "files" ? (
         <FlatList
           list={filesCards}
-          renderItem={(item, index) => <FileCard key={index} data={item} />}
+          renderItem={(item, index) => (
+            <FileCard
+              key={index}
+              data={item}
+              displayMode={elementsDisplayMode}
+            />
+          )}
           renderWhenEmpty={() => <div>Cписок порожній!</div>}
           // sortBy={["firstName", {key: "lastName", descending: true}]}
           // groupBy={person => person.info.age > 18 ? 'Over 18' : 'Under 18'}
-          displayGrid
+          displayGrid={elementsDisplayMode === "grid" && true}
           gridGap="10px"
-          rowGap="10px"
-          displayRow
         />
       ) : (
         <FlatList
           list={foldersCards}
-          renderItem={(item, index) => <FolderCard key={index} data={item} />}
+          renderItem={(item, index) => (
+            <FolderCard
+              key={index}
+              data={item}
+              displayMode={elementsDisplayMode}
+            />
+          )}
           renderWhenEmpty={() => <div>Cписок порожній!</div>}
           // sortBy={["firstName", {key: "lastName", descending: true}]}
           // groupBy={person => person.info.age > 18 ? 'Over 18' : 'Under 18'}

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 
 export default function CardKebabMenuPopUp() {
   return (
-    <div className="kebab-menu__pop-up pop-up">
-      <button className="pop-up__load-btn">Завантажити</button>
-      <button className="pop-up__share-btn">
+    <ul className="kebab-menu__pop-up pop-up">
+      <li className="pop-up__load-btn load-btn">Завантажити</li>
+      <li className="pop-up__share-btn share-btn">
         Поділитися
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -16,14 +16,23 @@ export default function CardKebabMenuPopUp() {
           <path
             d="M7 13L10 8L7 3"
             stroke="black"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
-      </button>
-      <button className="pop-up__rename-btn">Перейменувати</button>
-      <button className="pop-up__delete-btn">Видалити</button>
-    </div>
+      </li>
+      <li className="pop-up__rename-btn rename-btn">Перейменувати</li>
+      <li className="pop-up__delete-btn delete-btn disabled">Видалити</li>
+
+      <ul className="pop-up__context-menu context-menu">
+        <li className="context-menu__open-access-btn open-access-btn">
+          Відкрити доступ
+        </li>
+        <li className="context-menu__create-link-btn create-link-btn">
+          Створити посилання
+        </li>
+      </ul>
+    </ul>
   );
 }
