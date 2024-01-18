@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ActivePanel from "./activePanels/MyRecords/ActivePanel";
+import ActivePanel from "./activePanels/MyRecords/MyRecordsActivePanel";
 
 type PropsType = {
   navTabs: string[];

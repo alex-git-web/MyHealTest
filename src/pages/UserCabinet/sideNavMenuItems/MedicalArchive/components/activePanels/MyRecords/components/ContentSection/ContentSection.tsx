@@ -28,7 +28,7 @@ export default function ContentSection(props: PropsType) {
     useState<FolderCardType[]>(FolderCardsDefault);
 
   return (
-    <ul className="content-section__container content-section">
+    <ul className="content-section__container content-section my-records">
       {displayedElementsType === "files" ? (
         <FlatList
           list={filesCards}

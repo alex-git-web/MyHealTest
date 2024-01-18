@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import NavTabsForActivePanel from "./components/NavTabsForActivePanel";
 import "./../../../../../src/build/css/pages/UserCabinet/sideNavMenuItems/MedicalArchive/index.css";
-import ActivePanel from "./components/activePanels/MyRecords/ActivePanel";
+import MyRecordsActivePanel from "./components/activePanels/MyRecords/MyRecordsActivePanel";
+import LocalStorageActivePanel from "./components/activePanels/LocalStorage/LocalStorageActivePanel";
 
 export default function MedicalArchive() {
   const [activeTabIndex, setActiveTabIndex] = useState<number>(0);
@@ -21,9 +22,11 @@ export default function MedicalArchive() {
       />
 
       {activeTabIndex === 0 ? (
-        <ActivePanel panelTitle={navTabs[activeTabIndex]} />
+        <MyRecordsActivePanel panelTitle={navTabs[activeTabIndex]} />
       ) : activeTabIndex === 1 ? null : activeTabIndex === 2 ? null : (
-        activeTabIndex === 3 && null
+        activeTabIndex === 3 && (
+          <LocalStorageActivePanel panelTitle={navTabs[activeTabIndex]} />
+        )
       )}
     </div>
   );

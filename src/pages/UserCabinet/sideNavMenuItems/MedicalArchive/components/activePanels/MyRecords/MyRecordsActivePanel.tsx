@@ -12,7 +12,7 @@ type PropsType = {
   panelTitle: string;
 };
 
-export default function ActivePanel(props: PropsType) {
+export default function MyRecordsActivePanel(props: PropsType) {
   const { panelTitle } = props;
 
   const [activeCategoryTabIndex, setActiveCategoryTabIndex] =

@@ -1,5 +1,7 @@
 @import "./activePanels/MyRecords/index.scss";
+@import "./activePanels/LocalStorage/index.scss";
 
 %activePanel {
   @extend %myRecordsPanel;
+  @extend %localStoragePanel;
 }

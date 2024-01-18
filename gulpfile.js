@@ -25,6 +25,14 @@ task('sass', function () {
 		.pipe(dest('./src/build/css/'))
 });
 
+
+// gulp.task('images', function () {
+// 	return gulp.src('./src/img/**/*')
+// 		// .pipe(changed('./build/img/'))
+// 		.pipe(gulp.dest('./src/build/img/'))
+// });
+
+
 task('fonts', function () {
 	return src('./src/fonts/**/*')
 		// .pipe(changed('./build/fonts/'))
