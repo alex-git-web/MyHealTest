@@ -1,14 +1,19 @@
-import { ContentElementsDisplayModeType } from "../../../types";
+import {
+  ContentDisplayedElementsType,
+  ContentElementsDisplayModeType,
+} from "../../../types";
 import CardKebabMenuPopUp from "./CardKebabMenuPopUp";
 
 export const KebubMenuBtn = ({
   isKebabMenuBtnClicked,
   setIsKebabMenuBtnClicked,
   displayMode,
+  displayedElementsType,
 }: {
   isKebabMenuBtnClicked: boolean;
   setIsKebabMenuBtnClicked: Function;
   displayMode: ContentElementsDisplayModeType;
+  displayedElementsType: ContentDisplayedElementsType;
 }) => {
   return (
     <>
@@ -33,7 +38,10 @@ export const KebubMenuBtn = ({
       </button>
 
       {isKebabMenuBtnClicked && (
-        <CardKebabMenuPopUp displayMode={displayMode} />
+        <CardKebabMenuPopUp
+          displayMode={displayMode}
+          displayedElementsType={displayedElementsType}
+        />
       )}
     </>
   );

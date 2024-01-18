@@ -5,11 +5,10 @@ import { FilterPropsType } from "../../../types";
 
 type PropsType = {
   setFilterProps: Function;
-  closeModal: Function;
 };
 
 export default function FilterBtnPopUp(props: PropsType) {
-  const { setFilterProps, closeModal } = props;
+  const { setFilterProps } = props;
 
   const [filterParams, setFilterParams] = useState<FilterPropsType>({
     selectedCategory: "",
@@ -45,72 +44,70 @@ export default function FilterBtnPopUp(props: PropsType) {
   }, [filterParams]);
 
   return (
-    <div className="filter-btn-pop-up__wrapper" onClick={() => closeModal()}>
-      <div
-        className="filter-btn-pop-up__container filter-btn-pop-up"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <DropdownComponent
-          data={categories}
-          setSelected={(value: string) =>
+    <div
+      className="filter-btn-pop-up__container filter-btn-pop-up"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <DropdownComponent
+        data={categories}
+        setSelected={(value: string) =>
+          setFilterParams((state) => {
+            return {
+              ...state,
+              selectedCategory: value,
+            };
+          })
+        }
+        placeholder="Категорія"
+      />
+
+      <DropdownComponent
+        data={statuses}
+        setSelected={(value: string) =>
+          setFilterParams((state) => {
+            return {
+              ...state,
+              selectedStatus: value,
+            };
+          })
+        }
+        placeholder="Статус"
+      />
+
+      <div className="filter-btn-pop-up__calendars-input-wrapper">
+        <CalendarComponent
+          value={filterParams.fromDate}
+          setValue={(value: Date | null) =>
             setFilterParams((state) => {
               return {
                 ...state,
-                selectedCategory: value,
+                fromDate: value,
               };
             })
           }
-          placeholder="Категорія"
+          placeholder="Від"
         />
-
-        <DropdownComponent
-          data={statuses}
-          setSelected={(value: string) =>
+        <CalendarComponent
+          value={filterParams.toDate}
+          setValue={(value: Date | null) =>
             setFilterParams((state) => {
               return {
                 ...state,
-                selectedStatus: value,
+                toDate: value,
               };
             })
           }
-          placeholder="Статус"
+          placeholder="До"
         />
-
-        <div className="filter-btn-pop-up__calendars-input-wrapper">
-          <CalendarComponent
-            value={filterParams.fromDate}
-            setValue={(value: Date | null) =>
-              setFilterParams((state) => {
-                return {
-                  ...state,
-                  fromDate: value,
-                };
-              })
-            }
-            placeholder="Від"
-          />
-          <CalendarComponent
-            value={filterParams.toDate}
-            setValue={(value: Date | null) =>
-              setFilterParams((state) => {
-                return {
-                  ...state,
-                  toDate: value,
-                };
-              })
-            }
-            placeholder="До"
-          />
-        </div>
-
-        <button
-          className="filter-btn-pop-up__confirm-btn"
-          onClick={setFilter}
-          disabled={isConfirmBtnDisabled}
-        >
-          Застосувати фільтр
-        </button>
       </div>
+
+      <button
+        className="filter-btn-pop-up__confirm-btn"
+        onClick={setFilter}
+        disabled={isConfirmBtnDisabled}
+      >
+        Застосувати фільтр
+      </button>
     </div>
   );
 }

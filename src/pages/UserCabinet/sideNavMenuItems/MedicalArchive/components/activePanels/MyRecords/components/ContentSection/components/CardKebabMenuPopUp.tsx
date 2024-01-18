@@ -1,17 +1,28 @@
 import React, { useState } from "react";
-import { ContentElementsDisplayModeType } from "../../../types";
+import {
+  ContentDisplayedElementsType,
+  ContentElementsDisplayModeType,
+} from "../../../types";
 
 type PropsType = {
   displayMode: ContentElementsDisplayModeType;
+  displayedElementsType: ContentDisplayedElementsType;
 };
 export default function CardKebabMenuPopUp(props: PropsType) {
-  const { displayMode } = props;
+  const { displayMode, displayedElementsType } = props;
 
   return (
     <ul
-      className="kebab-menu__pop-up pop-up 
-      "
+      className={`kebab-menu__pop-up pop-up ${
+        displayMode === "grid" ? "grid-mode" : "list-mode"
+      }
+      `}
     >
+      {displayedElementsType === "files" && (
+        <li className="pop-up__rename-btn add-file-to-folder-btn">
+          Додати в папку
+        </li>
+      )}
       <li className="pop-up__load-btn load-btn">Завантажити</li>
       <li className="pop-up__share-btn share-btn">
         Поділитися
@@ -31,7 +42,9 @@ export default function CardKebabMenuPopUp(props: PropsType) {
           />
         </svg>
       </li>
-      <li className="pop-up__rename-btn rename-btn">Перейменувати</li>
+      {displayedElementsType === "folders" && (
+        <li className="pop-up__rename-btn rename-btn">Перейменувати</li>
+      )}
       <li className="pop-up__delete-btn delete-btn disabled">Видалити</li>
 
       <ul

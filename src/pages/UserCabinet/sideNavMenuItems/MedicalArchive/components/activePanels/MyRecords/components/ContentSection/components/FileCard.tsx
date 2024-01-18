@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import { ContentElementsDisplayModeType, FileCardType } from "../../../types";
+import {
+  ContentDisplayedElementsType,
+  ContentElementsDisplayModeType,
+  FileCardType,
+} from "../../../types";
 import { KebubMenuBtn, OpenFilesBtn } from "./common";
 
 type PropsType = {
   data: FileCardType;
   displayMode: ContentElementsDisplayModeType;
+  displayedElementsType: ContentDisplayedElementsType;
 };
 
 const InfoBlock = ({ data }: { data: FileCardType }) => {
@@ -29,7 +34,7 @@ const InfoBlock = ({ data }: { data: FileCardType }) => {
 };
 
 export default function FileCard(props: PropsType) {
-  const { data, displayMode } = props;
+  const { data, displayMode, displayedElementsType } = props;
   const [isKebabMenuBtnClicked, setIsKebabMenuBtnClicked] =
     useState<boolean>(false);
 
@@ -45,6 +50,7 @@ export default function FileCard(props: PropsType) {
           isKebabMenuBtnClicked={isKebabMenuBtnClicked}
           setIsKebabMenuBtnClicked={setIsKebabMenuBtnClicked}
           displayMode={displayMode}
+          displayedElementsType={displayedElementsType}
         />
       </header>
 
@@ -60,13 +66,16 @@ export default function FileCard(props: PropsType) {
 
       <h4 className="file-card__create-date">{data.createDate}</h4>
 
-      <OpenFilesBtn filesLenght={data.files.length} />
+      <div className="end-container">
+        <OpenFilesBtn filesLenght={data.files.length} />
 
-      <KebubMenuBtn
-        isKebabMenuBtnClicked={isKebabMenuBtnClicked}
-        setIsKebabMenuBtnClicked={setIsKebabMenuBtnClicked}
-        displayMode={displayMode}
-      />
+        <KebubMenuBtn
+          isKebabMenuBtnClicked={isKebabMenuBtnClicked}
+          setIsKebabMenuBtnClicked={setIsKebabMenuBtnClicked}
+          displayMode={displayMode}
+          displayedElementsType={displayedElementsType}
+        />
+      </div>
     </div>
   ) : (
     <></>

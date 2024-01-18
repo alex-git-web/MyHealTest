@@ -41,7 +41,8 @@
         }
 
         &.active {
-          background: #29f499;
+          background: #173236;
+          color: #fff;
         }
       }
     }
@@ -82,6 +83,12 @@
         .button {
           padding: 11px 10px;
           color: #173236;
+          font-family: "Hanken Grotesk", sans-serif;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 1; /* 100% */
+          letter-spacing: -0.42px;
           background: transparent;
           border-radius: 20px;
           outline: none;

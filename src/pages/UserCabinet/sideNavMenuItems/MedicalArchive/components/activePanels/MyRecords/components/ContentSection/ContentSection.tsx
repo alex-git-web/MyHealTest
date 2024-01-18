@@ -37,6 +37,7 @@ export default function ContentSection(props: PropsType) {
               key={index}
               data={item}
               displayMode={elementsDisplayMode}
+              displayedElementsType={displayedElementsType}
             />
           )}
           renderWhenEmpty={() => <div>Cписок порожній!</div>}
@@ -61,6 +62,7 @@ export default function ContentSection(props: PropsType) {
               key={index}
               data={item}
               displayMode={elementsDisplayMode}
+              displayedElementsType={displayedElementsType}
             />
           )}
           renderWhenEmpty={() => <div>Cписок порожній!</div>}

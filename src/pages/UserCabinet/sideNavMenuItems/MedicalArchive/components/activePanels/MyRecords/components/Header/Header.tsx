@@ -16,7 +16,9 @@ export default function Header(props: PropsType) {
 
       <div className="panel-header__functional-buttons functional-buttons">
         <button
-          className="functional-buttons__button button filter-button"
+          className={`functional-buttons__button button filter-button ${
+            isShowFilterPopUp ? "active" : ""
+          }`}
           onClick={() => setIsShowFilterPopUp((state) => !state)}
         >
           <div className="button__icon">
@@ -37,7 +39,11 @@ export default function Header(props: PropsType) {
           <span className="button__caption">Фільтр</span>
         </button>
 
-        <button className="functional-buttons__button button access-button">
+        <button
+          className={`functional-buttons__button button access-button ${
+            false ? "active" : ""
+          }`}
+        >
           <div className="button__icon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +62,11 @@ export default function Header(props: PropsType) {
           <span className="button__caption">Доступи</span>
         </button>
 
-        <button className="functional-buttons__button button print-button">
+        <button
+          className={`functional-buttons__button button print-button ${
+            false ? "active" : ""
+          }`}
+        >
           <div className="button__icon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -74,10 +84,7 @@ export default function Header(props: PropsType) {
         </button>
 
         {isShowFilterPopUp && (
-          <FilterBtnPopUp
-            setFilterProps={setFilterProps}
-            closeModal={() => setIsShowFilterPopUp(false)}
-          />
+          <FilterBtnPopUp setFilterProps={setFilterProps} />
         )}
       </div>
     </div>
