@@ -10,6 +10,7 @@ import {
 import FileCard from "./components/FileCard";
 import { FileCardsDefault, FolderCardsDefault } from "../../contentDefault";
 import FolderCard from "./components/FolderCard";
+import { CheckIsDateInRange } from "../../../../../utils";
 
 type PropsType = {
   filterProps: FilterPropsType;
@@ -41,6 +42,14 @@ export default function ContentSection(props: PropsType) {
           renderWhenEmpty={() => <div>Cписок порожній!</div>}
           // sortBy={["firstName", {key: "lastName", descending: true}]}
           // groupBy={person => person.info.age > 18 ? 'Over 18' : 'Under 18'}
+          filterBy={(item, index) => {
+            const a = item.createDate.split(",")[0].split(".");
+            return CheckIsDateInRange({
+              fromDate: filterProps.fromDate,
+              toDate: filterProps.toDate,
+              date: `${a[2]}-${a[1]}-${a[0]}`, // year - month - day
+            });
+          }}
           displayGrid={elementsDisplayMode === "grid" && true}
           gridGap="10px"
         />

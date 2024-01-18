@@ -25,7 +25,12 @@ export default function ActivePanel(props: PropsType) {
     "Висновки",
     "Інше",
   ]);
-  const [filterProps, setFilterProps] = useState<FilterPropsType>();
+  const [filterProps, setFilterProps] = useState<FilterPropsType>({
+    selectedCategory: null,
+    selectedStatus: null,
+    fromDate: null,
+    toDate: null,
+  });
 
   const [elementsDisplayMode, setElementsDisplayMode] =
     useState<ContentElementsDisplayModeType>("grid");

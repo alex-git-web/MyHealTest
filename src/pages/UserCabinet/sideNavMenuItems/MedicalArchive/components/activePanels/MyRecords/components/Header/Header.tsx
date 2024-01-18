@@ -74,7 +74,10 @@ export default function Header(props: PropsType) {
         </button>
 
         {isShowFilterPopUp && (
-          <FilterBtnPopUp setFilterProps={setFilterProps} />
+          <FilterBtnPopUp
+            setFilterProps={setFilterProps}
+            closeModal={() => setIsShowFilterPopUp(false)}
+          />
         )}
       </div>
     </div>
