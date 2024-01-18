@@ -18,5 +18,12 @@ export type FolderCardType = {
   files: any[];
 };
 
+export type FilterPropsType = {
+  selectedCategory: string | null;
+  selectedStatus: string | null;
+  fromDate: Date | null;
+  toDate: Date | null;
+};
+
 export type ContentElementsDisplayModeType = "grid" | "list";
 export type ContentDisplayedElementsType = "files" | "folders";

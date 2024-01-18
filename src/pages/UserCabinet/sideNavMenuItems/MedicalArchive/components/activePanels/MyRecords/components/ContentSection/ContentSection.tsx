@@ -4,6 +4,7 @@ import {
   ContentDisplayedElementsType,
   ContentElementsDisplayModeType,
   FileCardType,
+  FilterPropsType,
   FolderCardType,
 } from "../../types";
 import FileCard from "./components/FileCard";
@@ -11,12 +12,13 @@ import { FileCardsDefault, FolderCardsDefault } from "../../contentDefault";
 import FolderCard from "./components/FolderCard";
 
 type PropsType = {
+  filterProps: FilterPropsType;
   elementsDisplayMode: ContentElementsDisplayModeType;
   displayedElementsType: ContentDisplayedElementsType;
 };
 
 export default function ContentSection(props: PropsType) {
-  const { elementsDisplayMode, displayedElementsType } = props;
+  const { filterProps, elementsDisplayMode, displayedElementsType } = props;
 
   const [filesCards, setFilesCards] =
     useState<FileCardType[]>(FileCardsDefault);
@@ -55,10 +57,8 @@ export default function ContentSection(props: PropsType) {
           renderWhenEmpty={() => <div>Cписок порожній!</div>}
           // sortBy={["firstName", {key: "lastName", descending: true}]}
           // groupBy={person => person.info.age > 18 ? 'Over 18' : 'Under 18'}
-          displayGrid
+          displayGrid={elementsDisplayMode === "grid" && true}
           gridGap="10px"
-          rowGap="10px"
-          displayRow
         />
       )}
     </ul>

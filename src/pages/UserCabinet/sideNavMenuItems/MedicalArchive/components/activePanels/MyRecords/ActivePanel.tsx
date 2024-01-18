@@ -5,6 +5,7 @@ import SubHeader from "./components/SubHeader/SubHeader";
 import {
   ContentDisplayedElementsType,
   ContentElementsDisplayModeType,
+  FilterPropsType,
 } from "./types";
 
 type PropsType = {
@@ -24,6 +25,7 @@ export default function ActivePanel(props: PropsType) {
     "Висновки",
     "Інше",
   ]);
+  const [filterProps, setFilterProps] = useState<FilterPropsType>();
 
   const [elementsDisplayMode, setElementsDisplayMode] =
     useState<ContentElementsDisplayModeType>("grid");
@@ -32,7 +34,8 @@ export default function ActivePanel(props: PropsType) {
 
   return (
     <div className="my-records-panel__container">
-      <Header panelTitle={panelTitle} />
+      <Header panelTitle={panelTitle} setFilterProps={setFilterProps} />
+
       <SubHeader
         categoriesTabs={categoriesTabs}
         activeCategoryTabIndex={activeCategoryTabIndex}
@@ -50,6 +53,7 @@ export default function ActivePanel(props: PropsType) {
       <SectionContent
         elementsDisplayMode={elementsDisplayMode}
         displayedElementsType={displayedElementsType}
+        filterProps={filterProps}
       />
     </div>
   );

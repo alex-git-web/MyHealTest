@@ -1,8 +1,17 @@
 import React, { useState } from "react";
+import { ContentElementsDisplayModeType } from "../../../types";
 
-export default function CardKebabMenuPopUp() {
+type PropsType = {
+  displayMode: ContentElementsDisplayModeType;
+};
+export default function CardKebabMenuPopUp(props: PropsType) {
+  const { displayMode } = props;
+
   return (
-    <ul className="kebab-menu__pop-up pop-up">
+    <ul
+      className="kebab-menu__pop-up pop-up 
+      "
+    >
       <li className="pop-up__load-btn load-btn">Завантажити</li>
       <li className="pop-up__share-btn share-btn">
         Поділитися
@@ -25,7 +34,11 @@ export default function CardKebabMenuPopUp() {
       <li className="pop-up__rename-btn rename-btn">Перейменувати</li>
       <li className="pop-up__delete-btn delete-btn disabled">Видалити</li>
 
-      <ul className="pop-up__context-menu context-menu">
+      <ul
+        className={`pop-up__context-menu context-menu ${
+          displayMode === "grid" ? "grid-mode" : "list-mode"
+        }`}
+      >
         <li className="context-menu__open-access-btn open-access-btn">
           Відкрити доступ
         </li>

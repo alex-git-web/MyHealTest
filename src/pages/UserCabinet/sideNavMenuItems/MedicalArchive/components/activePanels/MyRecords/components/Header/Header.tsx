@@ -3,10 +3,11 @@ import FilterBtnPopUp from "./components/FilterBtnPopUp";
 
 type PropsType = {
   panelTitle: string;
+  setFilterProps: Function;
 };
 
 export default function Header(props: PropsType) {
-  const { panelTitle } = props;
+  const { panelTitle, setFilterProps } = props;
   const [isShowFilterPopUp, setIsShowFilterPopUp] = useState<boolean>(false);
 
   return (
@@ -72,7 +73,9 @@ export default function Header(props: PropsType) {
           </div>
         </button>
 
-        {isShowFilterPopUp && <FilterBtnPopUp />}
+        {isShowFilterPopUp && (
+          <FilterBtnPopUp setFilterProps={setFilterProps} />
+        )}
       </div>
     </div>
   );

@@ -2,9 +2,10 @@
   position: relative;
 
   .kebab-menu-btn {
-    width: 40px;
+    min-width: 40px;
     height: 40px;
     border-radius: 30px;
+    margin-left: 30px;
     border: 1px solid #d2e1f5;
     background: #fff;
     display: flex;
@@ -40,6 +41,7 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    z-index: 10;
 
     &::before {
       content: "";
@@ -119,7 +121,6 @@
 
     .context-menu {
       position: absolute;
-      right: -180px;
       bottom: 70px;
       width: 180px;
       border-radius: 20px;
@@ -130,6 +131,14 @@
       opacity: 0;
       pointer-events: none;
       z-index: 3;
+
+      &.grid-mode {
+        right: -180px;
+      }
+
+      &.list-mode {
+        left: -180px;
+      }
 
       &:hover {
         opacity: 1;
@@ -231,6 +240,9 @@
 
 %fileCardCreateDate {
   .file-card__create-date {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     margin: 0;
     margin-bottom: 10px;
     color: #1e1e1e;
@@ -239,6 +251,42 @@
     font-style: normal;
     font-weight: 500;
     line-height: 1; /* 100% */
+  }
+}
+
+%folderCardMainBlock {
+  .main {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+    &__title {
+      margin: 0;
+      margin-bottom: 8px;
+      color: #000;
+      font-family: "Hanken Grotesk", sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1; /* 100% */
+      letter-spacing: -0.42px;
+      text-wrap: wrap;
+      word-wrap: break-word;
+    }
+
+    &__direction {
+      margin: 0;
+      color: #777e90;
+      font-family: "Hanken Grotesk", sans-serif;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 1.16; /* 116.667% */
+      letter-spacing: -0.36px;
+      text-wrap: wrap;
+      word-wrap: break-word;
+    }
   }
 }
 
@@ -273,9 +321,9 @@
           @extend %kebabMenuBtn;
         }
 
-        @include fileCardInfoBlock(0);
+        @include fileCardInfoBlock(70px);
 
-        @include openFilesBtn(20);
+        @include openFilesBtn(20px);
       }
 
       &.list-mode {
@@ -295,6 +343,9 @@
 
         @extend %fileCardTitle;
         @include fileCardInfoBlock(0);
+        .file-card__create-date {
+          margin-bottom: 0;
+        }
         @extend %fileCardCreateDate;
         @include openFilesBtn(0);
         @extend %kebabMenuBtn;
@@ -326,32 +377,58 @@
         @extend %kebabMenuBtn;
       }
 
-      .main {
-        margin-top: 20px;
+      @extend %folderCardMainBlock;
+
+      @include openFilesBtn(20px);
+    }
+
+    &.list-mode {
+      width: auto;
+      border-radius: 20px;
+      border: 1px solid #e5eeff;
+      background: #fff;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+
+      &:not(:last-child) {
         margin-bottom: 10px;
+      }
+
+      .folder-card__header-icon {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding-left: 10px;
+      }
+
+      @extend %folderCardMainBlock;
+      .main {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 0;
+        margin-bottom: 0;
+        min-width: 45%;
+
         &__title {
-          margin: 0;
-          margin-bottom: 8px;
-          color: #000;
-          font-family: "Hanken Grotesk", sans-serif;
-          font-size: 14px;
-          font-style: normal;
-          font-weight: 600;
-          line-height: 1; /* 100% */
-          letter-spacing: -0.42px;
+          margin-bottom: 0;
+          padding-left: 50px;
+          max-width: 20%;
         }
 
         &__direction {
-          margin: 0;
-          color: #777e90;
-          font-family: "Hanken Grotesk", sans-serif;
-          font-size: 12px;
-          font-style: normal;
-          font-weight: 500;
-          line-height: 1.16; /* 116.667% */
-          letter-spacing: -0.36px;
+          padding-left: 15px;
+          padding-right: 30px;
+          max-width: 60%;
         }
       }
+
+      @include openFilesBtn(0);
+
+      @extend %kebabMenuBtn;
     }
   }
 }
