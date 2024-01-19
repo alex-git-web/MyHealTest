@@ -1,5 +1,6 @@
 @import "./components/header.scss";
 @import "./components/contentSection.scss";
+@import "./components/helpInfoModal.scss";
 
 %localStoragePanel {
   .local-storage-panel__container {
@@ -9,5 +10,6 @@
 
     @extend %header;
     @extend %contentSection;
+    @extend %helpInfoModal;
   }
 }

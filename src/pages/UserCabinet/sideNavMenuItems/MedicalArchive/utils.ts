@@ -34,11 +34,6 @@ export const CheckIsDateInRange = ({
       ).getTime();
     }
 
-    console.log(startDate);
-    console.log(endDate);
-    console.log(curDate);
-    console.log("---");
-
     return startDate && endDate && curDate >= startDate && curDate <= endDate
       ? true
       : startDate && !endDate && curDate >= startDate
