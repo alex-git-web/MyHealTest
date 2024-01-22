@@ -1,7 +1,7 @@
-import React, { useMemo, useState } from "react";
-import { DropdownComponent } from "../../common";
-import { CalendarComponent } from "../../CalendarComponent";
-import { FilterPropsType } from "../../../types";
+import React, { useMemo, useState } from 'react';
+import { DropdownComponent } from '../../DropdownComponent';
+import { CalendarComponent } from '../../CalendarComponent';
+import { FilterPropsType } from '../../../types';
 
 type PropsType = {
   setFilterProps: Function;
@@ -11,18 +11,14 @@ export default function FilterBtnPopUp(props: PropsType) {
   const { setFilterProps } = props;
 
   const [filterParams, setFilterParams] = useState<FilterPropsType>({
-    selectedCategory: "",
-    selectedStatus: "",
+    selectedCategory: '',
+    selectedStatus: '',
     fromDate: null,
     toDate: null,
   });
 
-  const [categories, setCategories] = useState<string[]>([
-    "one",
-    "two",
-    "three",
-  ]);
-  const [statuses, setStatuses] = useState<string[]>(["one", "two", "three"]);
+  const [categories, setCategories] = useState<string[]>(['one', 'two', 'three']);
+  const [statuses, setStatuses] = useState<string[]>(['one', 'two', 'three']);
 
   const setFilter = () => {
     setFilterProps({
@@ -44,14 +40,11 @@ export default function FilterBtnPopUp(props: PropsType) {
   }, [filterParams]);
 
   return (
-    <div
-      className="filter-btn-pop-up__container filter-btn-pop-up"
-      onClick={(e) => e.stopPropagation()}
-    >
+    <div className="filter-btn-pop-up__container filter-btn-pop-up" onClick={e => e.stopPropagation()}>
       <DropdownComponent
         data={categories}
         setSelected={(value: string) =>
-          setFilterParams((state) => {
+          setFilterParams(state => {
             return {
               ...state,
               selectedCategory: value,
@@ -64,7 +57,7 @@ export default function FilterBtnPopUp(props: PropsType) {
       <DropdownComponent
         data={statuses}
         setSelected={(value: string) =>
-          setFilterParams((state) => {
+          setFilterParams(state => {
             return {
               ...state,
               selectedStatus: value,
@@ -78,7 +71,7 @@ export default function FilterBtnPopUp(props: PropsType) {
         <CalendarComponent
           value={filterParams.fromDate}
           setValue={(value: Date | null) =>
-            setFilterParams((state) => {
+            setFilterParams(state => {
               return {
                 ...state,
                 fromDate: value,
@@ -90,7 +83,7 @@ export default function FilterBtnPopUp(props: PropsType) {
         <CalendarComponent
           value={filterParams.toDate}
           setValue={(value: Date | null) =>
-            setFilterParams((state) => {
+            setFilterParams(state => {
               return {
                 ...state,
                 toDate: value,
@@ -101,11 +94,7 @@ export default function FilterBtnPopUp(props: PropsType) {
         />
       </div>
 
-      <button
-        className="filter-btn-pop-up__confirm-btn"
-        onClick={setFilter}
-        disabled={isConfirmBtnDisabled}
-      >
+      <button className="filter-btn-pop-up__confirm-btn" onClick={setFilter} disabled={isConfirmBtnDisabled}>
         Застосувати фільтр
       </button>
     </div>

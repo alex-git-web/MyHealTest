@@ -52,10 +52,10 @@ export default function CardKebabMenuPopUp(props: PropsType) {
           displayMode === "grid" ? "grid-mode" : "list-mode"
         }`}
       >
-        <li className="context-menu__open-access-btn open-access-btn">
+        <li className="context-menu__open-access-btn open-access-btn context-menu__item">
           Відкрити доступ
         </li>
-        <li className="context-menu__create-link-btn create-link-btn">
+        <li className="context-menu__create-link-btn create-link-btn context-menu__item">
           Створити посилання
         </li>
       </ul>

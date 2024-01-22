@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { localStorageActivePanel } from "../../../../../../../../../images";
+import { localStorageActivePanel } from "./../../../../../../../../../images";
 
 // type PropsType = {};
 

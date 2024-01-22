@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import NavTabsForActivePanel from "./components/NavTabsForActivePanel";
-import "./../../../../../src/build/css/pages/UserCabinet/sideNavMenuItems/MedicalArchive/index.css";
 import MyRecordsActivePanel from "./components/activePanels/MyRecords/MyRecordsActivePanel";
 import LocalStorageActivePanel from "./components/activePanels/LocalStorage/LocalStorageActivePanel";
 
-export default function MedicalArchive() {
+const MedicalArchive = () => {
   const [activeTabIndex, setActiveTabIndex] = useState<number>(0);
   const [navTabs, setNavTabs] = useState<string[]>([
     "Мої записи",
@@ -30,4 +29,6 @@ export default function MedicalArchive() {
       )}
     </div>
   );
-}
+};
+
+export default MedicalArchive;

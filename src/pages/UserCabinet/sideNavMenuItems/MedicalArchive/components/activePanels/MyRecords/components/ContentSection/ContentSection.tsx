@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import FlatList from "flatlist-react";
 import {
   ContentDisplayedElementsType,
   ContentElementsDisplayModeType,
@@ -28,49 +27,38 @@ export default function ContentSection(props: PropsType) {
     useState<FolderCardType[]>(FolderCardsDefault);
 
   return (
-    <ul className="content-section__container content-section my-records">
+    <ul
+      className={`content-section__container content-section my-records ${
+        elementsDisplayMode === "grid" ? "grid-mode" : "list-mode"
+      }`}
+    >
       {displayedElementsType === "files" ? (
-        <FlatList
-          list={filesCards}
-          renderItem={(item, index) => (
+        filesCards.length ? (
+          filesCards.map((item, index) => (
             <FileCard
               key={index}
               data={item}
               displayMode={elementsDisplayMode}
               displayedElementsType={displayedElementsType}
             />
-          )}
-          renderWhenEmpty={() => <div>Cписок порожній!</div>}
-          // sortBy={["firstName", {key: "lastName", descending: true}]}
-          // groupBy={person => person.info.age > 18 ? 'Over 18' : 'Under 18'}
-          filterBy={(item, index) => {
-            const a = item.createDate.split(",")[0].split(".");
-            return CheckIsDateInRange({
-              fromDate: filterProps.fromDate,
-              toDate: filterProps.toDate,
-              date: `${a[2]}-${a[1]}-${a[0]}`, // year - month - day
-            });
-          }}
-          displayGrid={elementsDisplayMode === "grid" && true}
-          gridGap="10px"
-        />
+          ))
+        ) : (
+          <div>Cписок порожній!</div>
+        )
       ) : (
-        <FlatList
-          list={foldersCards}
-          renderItem={(item, index) => (
+        displayedElementsType === "folders" &&
+        (foldersCards.length ? (
+          foldersCards.map((item, index) => (
             <FolderCard
               key={index}
               data={item}
               displayMode={elementsDisplayMode}
               displayedElementsType={displayedElementsType}
             />
-          )}
-          renderWhenEmpty={() => <div>Cписок порожній!</div>}
-          // sortBy={["firstName", {key: "lastName", descending: true}]}
-          // groupBy={person => person.info.age > 18 ? 'Over 18' : 'Under 18'}
-          displayGrid={elementsDisplayMode === "grid" && true}
-          gridGap="10px"
-        />
+          ))
+        ) : (
+          <div>Cписок порожній!</div>
+        ))
       )}
     </ul>
   );

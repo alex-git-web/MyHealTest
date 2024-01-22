@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import ActivePanel from "./activePanels/MyRecords/MyRecordsActivePanel";
+import React from 'react';
 
 type PropsType = {
   navTabs: string[];
@@ -17,9 +16,7 @@ export default function NavTabsForActivePanel(props: PropsType) {
           return (
             <li
               key={index}
-              className={`nav-tabs-item${
-                index === activeTabIndex ? " active" : ""
-              }`}
+              className={`nav-tabs-item${index === activeTabIndex ? ' active' : ''}`}
               onClick={() => setActiveTabIndex(index)}
             >
               {item}

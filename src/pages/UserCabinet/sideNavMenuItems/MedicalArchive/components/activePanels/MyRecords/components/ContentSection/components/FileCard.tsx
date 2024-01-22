@@ -1,10 +1,6 @@
-import React, { useState } from "react";
-import {
-  ContentDisplayedElementsType,
-  ContentElementsDisplayModeType,
-  FileCardType,
-} from "../../../types";
-import { KebubMenuBtn, OpenFilesBtn } from "./common";
+import React, { useState } from 'react';
+import { ContentDisplayedElementsType, ContentElementsDisplayModeType, FileCardType } from '../../../types';
+import { KebubMenuBtn, OpenFilesBtn } from './common';
 
 type PropsType = {
   data: FileCardType;
@@ -35,11 +31,10 @@ const InfoBlock = ({ data }: { data: FileCardType }) => {
 
 export default function FileCard(props: PropsType) {
   const { data, displayMode, displayedElementsType } = props;
-  const [isKebabMenuBtnClicked, setIsKebabMenuBtnClicked] =
-    useState<boolean>(false);
+  const [isKebabMenuBtnClicked, setIsKebabMenuBtnClicked] = useState<boolean>(false);
 
-  return displayMode === "grid" ? (
-    <div className="file-card__container file-card grid-mode">
+  return displayMode === 'grid' ? (
+    <li key={data.id} className="file-card__container file-card grid-mode">
       <header className="file-card__header">
         <span>
           <h4 className="file-card__create-date">{data.createDate}</h4>
@@ -57,9 +52,9 @@ export default function FileCard(props: PropsType) {
       <InfoBlock data={data} />
 
       <OpenFilesBtn filesLenght={data.files.length} />
-    </div>
-  ) : displayMode === "list" ? (
-    <div className="file-card__container file-card file-card list-mode">
+    </li>
+  ) : displayMode === 'list' ? (
+    <li key={data.id} className="file-card__container file-card file-card list-mode">
       <h4 className="file-card__title">{data.title}</h4>
 
       <InfoBlock data={data} />
@@ -76,7 +71,7 @@ export default function FileCard(props: PropsType) {
           displayedElementsType={displayedElementsType}
         />
       </div>
-    </div>
+    </li>
   ) : (
     <></>
   );

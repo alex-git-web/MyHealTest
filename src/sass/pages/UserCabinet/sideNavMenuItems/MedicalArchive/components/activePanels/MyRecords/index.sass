@@ -1,0 +1,13 @@
+@import './components/header'
+@import './components/subHeader'
+@import './components/contentSection'
+
+@mixin myRecordsActivePanel
+  .my-records-panel__container
+    background-color: #fff
+    border-radius: 22px
+    padding: 15px 20px 25px
+
+    @include headerMyRecords
+    @include subHeaderMyRecords
+    @include contentSectionMyRecords

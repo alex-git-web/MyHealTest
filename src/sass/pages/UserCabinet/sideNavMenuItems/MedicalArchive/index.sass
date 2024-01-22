@@ -1,0 +1,14 @@
+@import './components/navTabsForActivePanel'
+@import './components/activePanels/MyRecords/index'
+@import './components/activePanels/LocalStorage/index'
+
+@mixin medicalArchiveContainer
+    .medical-archive__container
+        width: auto
+        height: max-content
+        padding: 0 50px
+
+        @include navTabsForActivePanel
+
+        @include myRecordsActivePanel
+        @include localStorageActivePanel

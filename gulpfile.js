@@ -16,8 +16,8 @@ task('clean', function (done) {
 });
 
 task('sass', function () {
-	return src('./src/scss/**/*.scss')
-		// .pipe(changed('./build/css/'))
+	return src('./src/sass/**/*.sass')
+		// .pipe(changed('./src/build/css/'))
 		.pipe(init())
 		.pipe(sassGlob())
 		.pipe(sass().on('error', sass.logError))
@@ -41,7 +41,7 @@ task('fonts', function () {
 
 
 task('watch', function () {
-	watch('./src/scss/**/*.scss', parallel('sass'));
+	watch('./src/sass/**/*.sass', parallel('sass'));
 });
 
 exports.default = series(
