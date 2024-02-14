@@ -7,6 +7,9 @@ import {
   ContentElementsDisplayModeType,
   FilterPropsType,
 } from "./types";
+import T from "./CustomDropdown";
+import CustomDropdown from "./CustomDropdown";
+import { CustomCalendarInput } from "./CustomCalendarInput";
 
 type PropsType = {
   panelTitle: string;
@@ -39,6 +42,9 @@ export default function MyRecordsActivePanel(props: PropsType) {
 
   return (
     <div className="my-records-panel__container">
+      <CustomDropdown />
+      <CustomCalendarInput />
+
       <Header panelTitle={panelTitle} setFilterProps={setFilterProps} />
 
       <SubHeader
