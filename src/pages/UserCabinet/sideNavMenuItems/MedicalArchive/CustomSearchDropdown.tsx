@@ -9,21 +9,15 @@ import {
   InputAdornment,
   Theme,
   styled,
-  Button,
   Stack,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemButton,
-  ListItemIcon,
   Typography,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import SearchIcon from "@mui/icons-material/Search";
 import { MedicalSpecialistsDefault } from "./components/activePanels/MyRecords/contentDefault";
 import { makeStyles } from "@mui/styles";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import { MedicalSpecialistType } from "./components/activePanels/MyRecords/types";
+import SearchIconSvg from "img/SearchIconSvg";
 
 const containsText = (text: string, searchText: string) => {
   return text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
@@ -44,10 +38,10 @@ export const CustomSearchDropdown = (props: Props) => {
     dropdownMenuStyles,
   } = props;
   const classes = useStyles();
-  const [allOptions, setAllOptions] = useState<MedicalSpecialistType[]>(
-    MedicalSpecialistsDefault
+  const [allOptions, setAllOptions] = useState<string[]>(
+    MedicalSpecialistsDefault.map((i) => JSON.stringify(i))
   );
-  const [selectedOption, setSelectedOption] = useState<MedicalSpecialistType>();
+  const [selectedOption, setSelectedOption] = useState<string>(allOptions[0]);
 
   const [searchText, setSearchText] = useState<string>("");
   const displayedOptions = useMemo(
@@ -58,159 +52,194 @@ export const CustomSearchDropdown = (props: Props) => {
     [searchText]
   );
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const handleChange = (event: SelectChangeEvent) => {
+    setSelectedOption(event.target.value as string);
+  };
 
   return (
     <Box className={classes.container}>
-      <Box className={classes.labelContainer}>
-        <Typography className={`${classes.label} ${isOpen ? "active" : ""}`}>
-          {!selectedOption
-            ? "Оберіть фахівця"
-            : `${selectedOption.name} ${selectedOption.lastName}`}
-        </Typography>
+      <FormControl fullWidth>
+        <CustomInputLabel id="search-select-label" sx={inputLabelStyles}>
+          {"Фахівець"}
+        </CustomInputLabel>
 
-        <Button
-          onClick={() => setIsOpen((prev) => !prev)}
-          className={classes.arrowBtn}
+        <Select
+          // Disables auto focus on MenuItems and allows TextField to be in focus
+          MenuProps={{
+            autoFocus: false,
+            className: classes.menuProps,
+            sx: dropdownMenuStyles,
+          }}
+          labelId="search-select-label"
+          id="search-select"
+          value={selectedOption}
+          onChange={handleChange}
+          onClose={() => setSearchText("")}
+          // This prevents rendering empty string in Select's value
+          // if search text would exclude currently selected option.
+          renderValue={() => {
+            const { name, lastName }: MedicalSpecialistType =
+              JSON.parse(selectedOption);
+            return name + " " + lastName;
+          }}
+          IconComponent={(props) => (
+            <KeyboardArrowDownOutlinedIcon
+              htmlColor="#173236"
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                },
+              }}
+              {...props}
+            />
+          )}
+          inputProps={{
+            className: classes.inputProps,
+            sx: dropdownInputStyles,
+          }}
+          className={classes.select}
+          sx={inputStyles}
         >
-          <KeyboardArrowDownOutlinedIcon
-            htmlColor="#173236"
-            sx={{
-              "&:hover": {
-                cursor: "pointer",
-                background: "transparent",
-              },
-              transform: `rotate(${isOpen ? "180" : "0"}deg)`,
-            }}
-          />
-        </Button>
-      </Box>
+          {/* TextField is put into ListSubheader so that it doesn't
+              act as a selectable item in the menu
+              i.e. we can click the TextField without triggering any selection.*/}
+          <ListSubheader sx={{ lineHeight: "1px", padding: "10px" }}>
+            <TextField
+              size="small"
+              // Autofocus on textfield
+              autoFocus
+              placeholder="Оберіть фахівця"
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIconSvg />
+                  </InputAdornment>
+                ),
+                classes: { input: classes.inputText, root: classes.inputRoot },
+              }}
+              onChange={(e) => setSearchText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key !== "Escape") {
+                  // Prevents autoselecting item while typing (default Select behaviour)
+                  e.stopPropagation();
+                }
+              }}
+              className={classes.input}
+            />
+          </ListSubheader>
+          {displayedOptions.map((option, i) => {
+            const {
+              photo,
+              name,
+              lastName,
+              specialization,
+            }: MedicalSpecialistType = JSON.parse(option);
+            return (
+              <MenuItem key={i} value={option}>
+                <img
+                  src={JSON.parse(option).photo}
+                  alt=""
+                  className={classes.userPhoto}
+                />
 
-      <List
-        className={`${classes.dropdownMenu} ${isOpen ? "active" : ""}`}
-        subheader={<li />}
-      >
-        <li>
-          <ul>
-            <ListSubheader>
-              <TextField
-                size="small"
-                // Autofocus on textfield
-                autoFocus
-                placeholder="Оберіть фахівця"
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                onChange={(e) => setSearchText(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key !== "Escape") {
-                    // Prevents autoselecting item while typing (default Select behaviour)
-                    e.stopPropagation();
-                  }
-                }}
-              />
-            </ListSubheader>
-
-            {allOptions.map((item, index) => {
-              return (
-                <ListItem key={`list-item-${index}`} disablePadding>
-                  <ListItemButton className={classes.item}>
-                    <ListItemIcon>
-                      <img
-                        src={item.photo}
-                        alt=""
-                        className={classes.userPhoto}
-                      />
-                    </ListItemIcon>
-
-                    <Stack className={classes.userInfo}>
-                      <Typography className={classes.fullName}>
-                        {item.name + " " + item.lastName}
-                      </Typography>
-                      <Typography className={classes.specialization}>
-                        {item.specialization}
-                      </Typography>
-                    </Stack>
-                  </ListItemButton>
-                </ListItem>
-              );
-            })}
-          </ul>
-        </li>
-      </List>
+                <Stack className={classes.userInfo}>
+                  <Typography className={classes.fullName}>
+                    {name + " " + lastName}
+                  </Typography>
+                  <Typography className={classes.specialization}>
+                    {specialization}
+                  </Typography>
+                </Stack>
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
     </Box>
   );
 };
 
-const useStyles = makeStyles((theme: Theme) => ({
-  container: {},
-  labelContainer: {
-    background: "#FFF",
-    border: "1px solid #2BBB97",
-    borderRadius: "10px",
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    height: "50px",
-    padding: "15px",
-    boxSizing: "border-box",
-  },
-  label: {
+export const CustomInputLabel = styled(Typography)(({ theme }) => ({
+  color: "#173236",
+  fontSize: "14px",
+  fontStyle: "normal",
+  fontWeight: 500,
+  marginBottom: "10px",
+
+  "&.Mui-focused": {
+    color: "#173236",
+    fontSize: "14px",
     fontStyle: "normal",
     fontWeight: 500,
+  },
+}));
+
+const useStyles = makeStyles((theme: Theme) => ({
+  container: {
+    maxWidth: "400px",
+  },
+  select: {
+    height: "50px",
+    minHeight: 0,
+
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "1px solid #2BBB97",
+      borderRadius: "10px",
+      outline: "none",
+    },
+
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      border: `1px solid ${"#173236"}`,
+    },
+  },
+  inputProps: {
+    color: "#173236",
     fontSize: "14px",
-    color: "#90A4BE",
-    border: "none",
-    padding: 0,
-    width: "max-content",
-    "&.active": { color: "#000" },
+    fontStyle: "normal",
+    fontWeight: 500,
   },
-  arrowBtn: {
-    padding: 0,
-    width: "max-content",
-    minWidth: 0,
-  },
-  dropdownMenu: {
-    filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-    borderRadius: "20px",
-    background: "#FFF",
-    position: "relative",
-    overflow: "auto",
-    "::-webkit-scrollbar": {
-      display: "none",
+  menuProps: {
+    "& .MuiMenu-paper": {
+      backgroundColor: "#fff",
+      marginTop: "6px",
+      borderRadius: "10px",
+      maxHeight: "20vh",
     },
-    msOverflowStyle: "none",
-    scrollbarWidth: "none",
-    transition: "max-height 0.3s ease 0s",
-    maxHeight: "0px",
-    padding: "0px",
+    "& .MuiMenuItem-root": {
+      height: "max-content",
+      fontSize: "14px",
+      fontStyle: "normal",
+      fontWeight: 500,
 
-    "& ul": { padding: 0 },
+      "&:hover": {
+        backgroundColor: "rgba(23, 50, 54, 0.05)",
+      },
+    },
 
-    "&.active": {
-      maxHeight: "400px",
-      padding: "10px",
+    "& .Mui-selected": {
+      backgroundColor: `${"#F1F6FA"} !important`,
+
+      "&:hover": {
+        backgroundColor: "#F1F6FA",
+        opacity: "1",
+      },
     },
   },
-  item: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+
+  arrow: {
+    "&:hover": {
+      cursor: "pointer",
+    },
   },
   userPhoto: {
     width: "40px",
     height: "40px",
     borderRadius: "100%",
+    marginRight: "10px",
   },
   userInfo: {
     flexDirection: "column",
-    marginRight: "10px",
   },
   fullName: {
     fontStyle: "normal",
@@ -223,5 +252,33 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontWeight: 500,
     fontSize: "12px",
     color: "#000",
+  },
+  input: {
+    height: "40px",
+    background: "#F1F6FA",
+    borderRadius: "30px",
+
+    "&:hover, &:focus": {
+      border: `1px solid ${"#173236"}`,
+    },
+  },
+  inputRoot: {
+    "& > fieldset": {
+      border: "none",
+    },
+  },
+  inputText: {
+    fontStyle: "normal",
+    fontWeight: 500,
+    fontSize: "14px",
+    color: "#000",
+    border: "none",
+
+    "&::placeholder": {
+      fontStyle: "normal",
+      fontWeight: 500,
+      fontSize: "14px",
+      color: "#A5BDDB",
+    },
   },
 }));
