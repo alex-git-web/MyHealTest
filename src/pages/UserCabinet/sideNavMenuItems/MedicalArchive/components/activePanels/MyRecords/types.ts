@@ -27,3 +27,11 @@ export type FilterPropsType = {
 
 export type ContentElementsDisplayModeType = "grid" | "list";
 export type ContentDisplayedElementsType = "files" | "folders";
+
+
+export type MedicalSpecialistType = {
+  photo: string,
+  name: string,
+  lastName: string,
+  specialization: string
+}

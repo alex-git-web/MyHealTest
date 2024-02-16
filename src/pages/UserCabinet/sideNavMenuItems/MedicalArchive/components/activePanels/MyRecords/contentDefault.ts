@@ -1,4 +1,13 @@
-import { FileCardType, FolderCardType } from './types';
+import { FileCardType, FolderCardType, MedicalSpecialistType } from './types';
+import MedicalSpecialist_1 from '../../../../../../../img/medical_specialists/medical_specialist_1.jpg'
+import MedicalSpecialist_2 from '../../../../../../../img/medical_specialists/medical_specialist_2.jpg'
+import MedicalSpecialist_3 from '../../../../../../../img/medical_specialists/medical_specialist_3.jpg'
+import MedicalSpecialist_4 from '../../../../../../../img/medical_specialists/medical_specialist_4.jpg'
+import MedicalSpecialist_5 from '../../../../../../../img/medical_specialists/medical_specialist_5.jpg'
+import MedicalSpecialist_6 from '../../../../../../../img/medical_specialists/medical_specialist_6.jpg'
+import MedicalSpecialist_7 from '../../../../../../../img/medical_specialists/medical_specialist_7.jpg'
+import MedicalSpecialist_8 from '../../../../../../../img/medical_specialists/medical_specialist_8.jpg'
+import MedicalSpecialist_9 from '../../../../../../../img/medical_specialists/medical_specialist_9.jpg'
 
 export const FileCardsDefault: FileCardType[] = [
   {
@@ -109,3 +118,61 @@ export const FolderCardsDefault: FolderCardType[] = [
     files: ['file 1', 'file 2', 'file 3'],
   },
 ];
+
+
+export const MedicalSpecialistsDefault: MedicalSpecialistType[] = [
+  {
+    photo: MedicalSpecialist_1,
+    name: "Олександр",
+    lastName: "Білишко",
+    specialization: "Трихолог"
+  },
+  {
+    photo: MedicalSpecialist_2,
+    name: "Ірина",
+    lastName: "Василькова",
+    specialization: "Дерматолог"
+  },
+  {
+    photo: MedicalSpecialist_3,
+    name: "Олександр",
+    lastName: "Бойко",
+    specialization: "Психолог"
+  },
+  {
+    photo: MedicalSpecialist_4,
+    name: "Олена",
+    lastName: "Тепла",
+    specialization: "Терапевт"
+  },
+  {
+    photo: MedicalSpecialist_5,
+    name: "Світлана",
+    lastName: "Коханенко",
+    specialization: "Сімейний лікар"
+  },
+  {
+    photo: MedicalSpecialist_6,
+    name: "Юрій",
+    lastName: "Засєда",
+    specialization: "Кардіолог"
+  },
+  {
+    photo: MedicalSpecialist_7,
+    name: "Катерина",
+    lastName: "Гордон",
+    specialization: "Трихолог"
+  },
+  {
+    photo: MedicalSpecialist_8,
+    name: "Олександр",
+    lastName: "Білишко",
+    specialization: "Трихолог"
+  },
+  {
+    photo: MedicalSpecialist_9,
+    name: "Олександр",
+    lastName: "Бойко",
+    specialization: "Психолог"
+  },
+]

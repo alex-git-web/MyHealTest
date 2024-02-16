@@ -1,0 +1,202 @@
+import React, { useState, useMemo } from "react";
+import {
+  Box,
+  FormControl,
+  MenuItem,
+  InputLabel,
+  ListSubheader,
+  TextField,
+  InputAdornment,
+  Theme,
+  styled,
+} from "@mui/material";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import SearchIcon from "@mui/icons-material/Search";
+import { MedicalSpecialistsDefault } from "./components/activePanels/MyRecords/contentDefault";
+import { makeStyles } from "@mui/styles";
+import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
+
+const containsText = (text: string, searchText: string) => {
+  return text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+};
+
+interface Props {
+  inputStyles?: React.CSSProperties;
+  inputLabelStyles?: React.CSSProperties;
+  dropdownInputStyles?: React.CSSProperties;
+  dropdownMenuStyles?: React.CSSProperties;
+}
+
+export const CustomSearchDropdown = (props: Props) => {
+  const {
+    inputStyles,
+    inputLabelStyles,
+    dropdownInputStyles,
+    dropdownMenuStyles,
+  } = props;
+  const classes = useStyles();
+  const [allOptions, setAllOptions] = useState<any[]>(
+    MedicalSpecialistsDefault
+  );
+  const [selectedOption, setSelectedOption] = useState<any>(allOptions[0]);
+
+  const [searchText, setSearchText] = useState<string>("");
+  const displayedOptions = useMemo(
+    () =>
+      allOptions.filter((option) =>
+        containsText(JSON.stringify(option), searchText)
+      ),
+    [searchText]
+  );
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setSelectedOption(event.target.value as string);
+  };
+
+  return (
+    <Box className={classes.container}>
+      <FormControl fullWidth>
+        <CustomInputLabel id="search-select-label" sx={inputLabelStyles}>
+          {"Фахівець"}
+        </CustomInputLabel>
+        <Select
+          // Disables auto focus on MenuItems and allows TextField to be in focus
+          MenuProps={{
+            autoFocus: false,
+            className: classes.menuProps,
+            sx: dropdownMenuStyles,
+          }}
+          labelId="search-select-label"
+          id="search-select"
+          value={selectedOption}
+          label={"Фахівець"}
+          onChange={handleChange}
+          onClose={() => setSearchText("")}
+          // This prevents rendering empty string in Select's value
+          // if search text would exclude currently selected option.
+          renderValue={() => selectedOption}
+          IconComponent={(props) => (
+            <KeyboardArrowDownOutlinedIcon
+              htmlColor="#173236"
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                },
+              }}
+              {...props}
+            />
+          )}
+          inputProps={{
+            className: classes.inputProps,
+            sx: dropdownInputStyles,
+          }}
+          className={classes.select}
+          sx={inputStyles}
+        >
+          {/* TextField is put into ListSubheader so that it doesn't
+              act as a selectable item in the menu
+              i.e. we can click the TextField without triggering any selection.*/}
+          <ListSubheader>
+            <TextField
+              size="small"
+              // Autofocus on textfield
+              autoFocus
+              placeholder="Оберіть фахівця"
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+              onChange={(e) => setSearchText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key !== "Escape") {
+                  // Prevents autoselecting item while typing (default Select behaviour)
+                  e.stopPropagation();
+                }
+              }}
+            />
+          </ListSubheader>
+          {/* {displayedOptions.map((option, i) => (
+            <MenuItem key={i} value={option}>
+              {option}
+            </MenuItem>
+          ))} */}
+        </Select>
+      </FormControl>
+    </Box>
+  );
+};
+
+export const CustomInputLabel = styled(InputLabel)(({ theme }) => ({
+  color: "#173236",
+  fontSize: "14px",
+  fontStyle: "normal",
+  fontWeight: 500,
+
+  "&.Mui-focused": {
+    color: "#173236",
+    fontSize: "14px",
+    fontStyle: "normal",
+    fontWeight: 500,
+  },
+}));
+
+const useStyles = makeStyles((theme: Theme) => ({
+  container: {},
+  inputProps: {
+    color: "#173236",
+    fontSize: "14px",
+    fontStyle: "normal",
+    fontWeight: 500,
+  },
+  menuProps: {
+    "& .MuiMenu-paper": {
+      backgroundColor: "#fff",
+      marginTop: "5px",
+      borderRadius: "10px",
+    },
+    "& .MuiMenuItem-root": {
+      padding: "0px 15px",
+      height: "40px",
+      color: "#173236",
+      fontSize: "14px",
+      fontStyle: "normal",
+      fontWeight: 500,
+
+      "&:hover": {
+        backgroundColor: "rgba(23, 50, 54, 0.05)",
+      },
+    },
+
+    "& .Mui-selected": {
+      backgroundColor: `${"#173236"} !important`,
+      color: "#fff",
+
+      "&:hover": {
+        backgroundColor: "#173236",
+        opacity: "1",
+      },
+    },
+  },
+  select: {
+    height: "40px",
+    minHeight: 0,
+
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "1px solid #d2e1f5",
+      borderRadius: "30px",
+    },
+
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      border: `1px solid ${"#173236"}`,
+    },
+  },
+  arrow: {
+    "&:hover": {
+      cursor: "pointer",
+    },
+  },
+}));
