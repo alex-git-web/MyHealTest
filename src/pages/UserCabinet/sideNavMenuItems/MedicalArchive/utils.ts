@@ -14,22 +14,19 @@ export const CheckIsDateInRange = ({
     let endDate: number | null = null;
     // Date
     let curDate: number = new Date(
-      `${new Date(date).getFullYear()}-${
-        new Date(date).getMonth() + 1
+      `${new Date(date).getFullYear()}-${new Date(date).getMonth() + 1
       }-${new Date(date).getDate()}`
     ).getTime();
 
     if (fromDate) {
       startDate = new Date(
-        `${new Date(fromDate).getFullYear()}-${
-          new Date(fromDate).getMonth() + 1
+        `${new Date(fromDate).getFullYear()}-${new Date(fromDate).getMonth() + 1
         }-${new Date(fromDate).getDate()}`
       ).getTime();
     }
     if (toDate) {
       endDate = new Date(
-        `${new Date(toDate).getFullYear()}-${
-          new Date(toDate).getMonth() + 1
+        `${new Date(toDate).getFullYear()}-${new Date(toDate).getMonth() + 1
         }-${new Date(toDate).getDate()}`
       ).getTime();
     }
@@ -37,13 +34,18 @@ export const CheckIsDateInRange = ({
     return startDate && endDate && curDate >= startDate && curDate <= endDate
       ? true
       : startDate && !endDate && curDate >= startDate
-      ? true
-      : endDate && !startDate && curDate <= endDate
-      ? true
-      : !startDate && !endDate
-      ? true
-      : false;
+        ? true
+        : endDate && !startDate && curDate <= endDate
+          ? true
+          : !startDate && !endDate
+            ? true
+            : false;
   }
 
   return false;
+};
+
+
+export const containsText = (text: string, searchText: string) => {
+  return text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
 };

@@ -2,12 +2,36 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { Button, Popover, Popper, Theme, useTheme } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  ListItemText,
+  MenuItem,
+  Popover,
+  Popper,
+  Stack,
+  Theme,
+  styled,
+  useTheme,
+} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { CustomModalCloseButton } from "./CustomModalCloseButton";
 import { ClickAwayListener, Fade } from "@material-ui/core";
 import { CustomSearchDropdown } from "./CustomSearchDropdown";
+import {
+  ArchiveRecordType,
+  MedicalSpecialistType,
+} from "./components/activePanels/MyRecords/types";
+import {
+  ArchiveRecordsDefault,
+  MedicalSpecialistsDefault,
+} from "./components/activePanels/MyRecords/contentDefault";
 // import { CustomPopper } from '../../../../../shared/CustomPopper';
+
+export type SelectedValuesType = {
+  medicalSpecialist: string;
+  archiveRecords: string[];
+};
 
 interface Props {
   isOpen: boolean;
@@ -17,6 +41,11 @@ interface Props {
 export const CreateAccessModal = (props: Props) => {
   const { isOpen, setIsOpen } = props;
   const classes = useStyles();
+
+  const [selectedValues, setSelectedValues] = useState<SelectedValuesType>({
+    medicalSpecialist: "",
+    archiveRecords: [],
+  });
   const [isInfoCardOpen, setIsInfoCardOpen] = useState<boolean>(false);
 
   const handleCloseModal = () => setIsOpen(false);
@@ -38,6 +67,46 @@ export const CreateAccessModal = (props: Props) => {
   const open = Boolean(anchorEl);
   const id = open ? "access-info-card" : undefined;
 
+  const MedicalSpecialistItemContent = ({
+    item,
+  }: {
+    item: MedicalSpecialistType;
+  }) => {
+    const { photo, name, lastName, specialization }: MedicalSpecialistType =
+      item;
+
+    return (
+      <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+        <DoctorAvatar src={photo} alt="User avatar" />
+
+        <Stack sx={{ flexDirection: "column" }}>
+          <DoctorFullName>{name + " " + lastName}</DoctorFullName>
+
+          <DoctorSpecialization>{specialization}</DoctorSpecialization>
+        </Stack>
+      </Box>
+    );
+  };
+
+  const ArchiveRecordItemContent = ({ item }: { item: ArchiveRecordType }) => {
+    console.log(
+      selectedValues.archiveRecords.filter((str) => str.includes(item))
+    );
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Checkbox checked={selectedValues.archiveRecords.indexOf(item) > -1} />
+        <ListItemText primary={item} />
+      </Box>
+    );
+  };
+
   return (
     <div>
       <Modal
@@ -45,6 +114,7 @@ export const CreateAccessModal = (props: Props) => {
         onClose={handleCloseModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        disableScrollLock={true}
       >
         <Box className={classes.modalContainer}>
           <CustomModalCloseButton onClick={handleCloseModal} />
@@ -107,7 +177,59 @@ export const CreateAccessModal = (props: Props) => {
             </div>
           </Box>
 
-          <CustomSearchDropdown />
+          {/* <CustomSearchDropdown
+            label={"Фахівець"}
+            inputLabel={"Oберіть фахівця"}
+            searchInputPlaceholder={"Шукати фахівця"}
+            menuItems={MedicalSpecialistsDefault}
+            itemComponent={({ item }: { item: MedicalSpecialistType }) => (
+              <MedicalSpecialistItemContent item={item} />
+            )}
+            renderValue={(selected: string[]) => {
+              return selected
+                .map((i) => {
+                  const { name, lastName }: MedicalSpecialistType =
+                    JSON.parse(i);
+                  return name + " " + lastName;
+                })
+                .join(", ");
+            }}
+            selectedValues={[selectedValues.medicalSpecialist]}
+            setSelectedValues={(value: string[]) =>
+              setSelectedValues((state: any) => {
+                return {
+                  ...state,
+                  medicalSpecialist: value[0],
+                };
+              })
+            }
+            styles={{
+              marginBottom: "20px",
+            }}
+          /> */}
+
+          <CustomSearchDropdown
+            label={"Записи з архіву"}
+            inputLabel={"Оберіть запис"}
+            searchInputPlaceholder={"Шукати запис"}
+            menuItems={ArchiveRecordsDefault}
+            itemComponent={({ item }: { item: ArchiveRecordType }) => (
+              <ArchiveRecordItemContent item={item} />
+            )}
+            renderValue={(selected: string[]) => {
+              return selected.join(", ");
+            }}
+            multiple={true}
+            selectedValues={[...selectedValues.archiveRecords]}
+            setSelectedValues={(value: string[]) =>
+              setSelectedValues((state: any) => {
+                return {
+                  ...state,
+                  archiveRecords: value,
+                };
+              })
+            }
+          />
         </Box>
       </Modal>
     </div>
@@ -223,4 +345,25 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: "12px",
     color: "#fff",
   },
+}));
+
+export const DoctorAvatar = styled("img")(({ theme }) => ({
+  width: "40px",
+  height: "40px",
+  borderRadius: "100%",
+  marginRight: "10px",
+}));
+
+export const DoctorFullName = styled(Typography)(({ theme }) => ({
+  fontStyle: "normal",
+  fontWeight: 500,
+  fontSize: "14px",
+  color: "#000",
+}));
+
+export const DoctorSpecialization = styled(Typography)(({ theme }) => ({
+  fontStyle: "normal",
+  fontWeight: 500,
+  fontSize: "12px",
+  color: "#000",
 }));

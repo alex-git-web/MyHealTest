@@ -1,4 +1,10 @@
-import React, { useState, useMemo } from "react";
+import React, {
+  useState,
+  useMemo,
+  ReactElement,
+  useCallback,
+  useEffect,
+} from "react";
 import {
   Box,
   FormControl,
@@ -13,37 +19,57 @@ import {
   Typography,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { MedicalSpecialistsDefault } from "./components/activePanels/MyRecords/contentDefault";
 import { makeStyles } from "@mui/styles";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import { MedicalSpecialistType } from "./components/activePanels/MyRecords/types";
 import SearchIconSvg from "img/SearchIconSvg";
-
-const containsText = (text: string, searchText: string) => {
-  return text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
-};
+import { containsText } from "./utils";
 
 interface Props {
+  label: string;
+  inputLabel: string;
+  searchInputPlaceholder: string;
+  menuItems: any[];
+  itemComponent: Function;
+  renderValue?: Function;
+  selectedValues: string[];
+  setSelectedValues: Function;
+  multiple?: boolean;
   inputStyles?: React.CSSProperties;
+  labelStyles?: React.CSSProperties;
   inputLabelStyles?: React.CSSProperties;
+  dropdownStyles?: React.CSSProperties;
   dropdownInputStyles?: React.CSSProperties;
   dropdownMenuStyles?: React.CSSProperties;
+  styles?: React.CSSProperties;
 }
 
 export const CustomSearchDropdown = (props: Props) => {
   const {
-    inputStyles,
+    label,
+    inputLabel,
+    searchInputPlaceholder,
+    menuItems,
+    itemComponent,
+    renderValue,
+    selectedValues,
+    setSelectedValues,
+    multiple = false,
     inputLabelStyles,
+    labelStyles,
+    dropdownStyles,
     dropdownInputStyles,
     dropdownMenuStyles,
+    styles,
   } = props;
   const classes = useStyles();
-  const [allOptions, setAllOptions] = useState<string[]>(
-    MedicalSpecialistsDefault.map((i) => JSON.stringify(i))
-  );
-  const [selectedOption, setSelectedOption] = useState<string>(allOptions[0]);
 
   const [searchText, setSearchText] = useState<string>("");
+
+  const allOptions = useMemo(() => {
+    return menuItems.map((i) => JSON.stringify(i));
+  }, []);
+
   const displayedOptions = useMemo(
     () =>
       allOptions.filter((option) =>
@@ -52,35 +78,84 @@ export const CustomSearchDropdown = (props: Props) => {
     [searchText]
   );
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setSelectedOption(event.target.value as string);
+  const handleChange = (event: SelectChangeEvent<typeof selectedValues>) => {
+    const {
+      target: { value },
+    } = event;
+
+    setSelectedValues(
+      !multiple
+        ? [event.target.value as string]
+        : // On autofill we get a stringified value.
+        typeof value === "string"
+        ? value.split(",")
+        : value
+    );
   };
 
   return (
-    <Box className={classes.container}>
-      <FormControl fullWidth>
-        <CustomInputLabel id="search-select-label" sx={inputLabelStyles}>
-          {"Фахівець"}
-        </CustomInputLabel>
+    <Box sx={styles}>
+      <CustomInputLabel sx={labelStyles}>{label}</CustomInputLabel>
 
+      <FormControl fullWidth>
+        <CustomSelectInputLabel
+          id="search-select-label"
+          sx={{
+            ...inputLabelStyles,
+            display: selectedValues.length ? "none" : "block",
+          }}
+          shrink={false}
+        >
+          {inputLabel}
+        </CustomSelectInputLabel>
         <Select
+          multiple={multiple}
+          label={""}
+          labelId="search-select-label"
+          id="search-select"
           // Disables auto focus on MenuItems and allows TextField to be in focus
           MenuProps={{
             autoFocus: false,
-            className: classes.menuProps,
-            sx: dropdownMenuStyles,
+            sx: {
+              "& .MuiList-root": {
+                paddingTop: 0,
+              },
+
+              "& .MuiMenu-paper": {
+                backgroundColor: "#fff",
+                marginTop: "6px",
+                borderRadius: "10px",
+                maxHeight: "25vh",
+              },
+              "& .MuiMenuItem-root": {
+                height: "max-content",
+                fontSize: "14px",
+                fontStyle: "normal",
+                fontWeight: 500,
+
+                "&:hover": {
+                  backgroundColor: "rgba(23, 50, 54, 0.05)",
+                },
+              },
+
+              "& .Mui-selected": {
+                backgroundColor: `${"#F1F6FA"} !important`,
+
+                "&:hover": {
+                  backgroundColor: "#F1F6FA",
+                  opacity: "1",
+                },
+              },
+              ...dropdownMenuStyles,
+            },
           }}
-          labelId="search-select-label"
-          id="search-select"
-          value={selectedOption}
+          value={selectedValues}
           onChange={handleChange}
           onClose={() => setSearchText("")}
-          // This prevents rendering empty string in Select's value
-          // if search text would exclude currently selected option.
-          renderValue={() => {
-            const { name, lastName }: MedicalSpecialistType =
-              JSON.parse(selectedOption);
-            return name + " " + lastName;
+          renderValue={(selected) => {
+            // This prevents rendering empty string in Select's value
+            // if search text would exclude currently selected option.
+            return !renderValue ? selected : renderValue(selected);
           }}
           IconComponent={(props) => (
             <KeyboardArrowDownOutlinedIcon
@@ -94,21 +169,41 @@ export const CustomSearchDropdown = (props: Props) => {
             />
           )}
           inputProps={{
-            className: classes.inputProps,
-            sx: dropdownInputStyles,
+            sx: {
+              color: "#173236",
+              fontSize: "14px",
+              fontStyle: "normal",
+              fontWeight: 500,
+              ...dropdownInputStyles,
+            },
           }}
-          className={classes.select}
-          sx={inputStyles}
+          sx={{
+            height: "50px",
+            minHeight: 0,
+
+            "& .MuiOutlinedInput-notchedOutline": {
+              border: `1px solid ${
+                selectedValues.length ? "#173236" : "#2BBB97"
+              }`,
+              borderRadius: "10px",
+              outline: "none",
+            },
+
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              border: `1px solid ${"#173236"}`,
+            },
+            ...dropdownStyles,
+          }}
         >
           {/* TextField is put into ListSubheader so that it doesn't
-              act as a selectable item in the menu
-              i.e. we can click the TextField without triggering any selection.*/}
+        act as a selectable item in the menu
+        i.e. we can click the TextField without triggering any selection.*/}
           <ListSubheader sx={{ lineHeight: "1px", padding: "10px" }}>
-            <TextField
+            <SearchInput
               size="small"
               // Autofocus on textfield
               autoFocus
-              placeholder="Оберіть фахівця"
+              placeholder={searchInputPlaceholder}
               fullWidth
               InputProps={{
                 startAdornment: (
@@ -125,32 +220,12 @@ export const CustomSearchDropdown = (props: Props) => {
                   e.stopPropagation();
                 }
               }}
-              className={classes.input}
             />
           </ListSubheader>
-          {displayedOptions.map((option, i) => {
-            const {
-              photo,
-              name,
-              lastName,
-              specialization,
-            }: MedicalSpecialistType = JSON.parse(option);
+          {displayedOptions.map((option, index) => {
             return (
-              <MenuItem key={i} value={option}>
-                <img
-                  src={JSON.parse(option).photo}
-                  alt=""
-                  className={classes.userPhoto}
-                />
-
-                <Stack className={classes.userInfo}>
-                  <Typography className={classes.fullName}>
-                    {name + " " + lastName}
-                  </Typography>
-                  <Typography className={classes.specialization}>
-                    {specialization}
-                  </Typography>
-                </Stack>
+              <MenuItem key={index} value={option}>
+                {itemComponent({ item: JSON.parse(option) })}
               </MenuItem>
             );
           })}
@@ -165,7 +240,7 @@ export const CustomInputLabel = styled(Typography)(({ theme }) => ({
   fontSize: "14px",
   fontStyle: "normal",
   fontWeight: 500,
-  marginBottom: "10px",
+  marginBottom: "5px",
 
   "&.Mui-focused": {
     color: "#173236",
@@ -175,93 +250,31 @@ export const CustomInputLabel = styled(Typography)(({ theme }) => ({
   },
 }));
 
-const useStyles = makeStyles((theme: Theme) => ({
-  container: {
-    maxWidth: "400px",
-  },
-  select: {
-    height: "50px",
-    minHeight: 0,
+export const CustomSelectInputLabel = styled(InputLabel)(({ theme }) => ({
+  color: "#173236",
+  fontSize: "14px",
+  fontStyle: "normal",
+  fontWeight: 500,
 
-    "& .MuiOutlinedInput-notchedOutline": {
-      border: "1px solid #2BBB97",
-      borderRadius: "10px",
-      outline: "none",
-    },
-
-    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      border: `1px solid ${"#173236"}`,
-    },
-  },
-  inputProps: {
+  "&.Mui-focused": {
     color: "#173236",
     fontSize: "14px",
     fontStyle: "normal",
     fontWeight: 500,
   },
-  menuProps: {
-    "& .MuiMenu-paper": {
-      backgroundColor: "#fff",
-      marginTop: "6px",
-      borderRadius: "10px",
-      maxHeight: "20vh",
-    },
-    "& .MuiMenuItem-root": {
-      height: "max-content",
-      fontSize: "14px",
-      fontStyle: "normal",
-      fontWeight: 500,
+}));
 
-      "&:hover": {
-        backgroundColor: "rgba(23, 50, 54, 0.05)",
-      },
-    },
+export const SearchInput = styled(TextField)(({ theme }) => ({
+  height: "40px",
+  background: "#F1F6FA",
+  borderRadius: "30px",
 
-    "& .Mui-selected": {
-      backgroundColor: `${"#F1F6FA"} !important`,
+  "&:hover, &:focus": {
+    border: "none",
+  },
+}));
 
-      "&:hover": {
-        backgroundColor: "#F1F6FA",
-        opacity: "1",
-      },
-    },
-  },
-
-  arrow: {
-    "&:hover": {
-      cursor: "pointer",
-    },
-  },
-  userPhoto: {
-    width: "40px",
-    height: "40px",
-    borderRadius: "100%",
-    marginRight: "10px",
-  },
-  userInfo: {
-    flexDirection: "column",
-  },
-  fullName: {
-    fontStyle: "normal",
-    fontWeight: 500,
-    fontSize: "14px",
-    color: "#000",
-  },
-  specialization: {
-    fontStyle: "normal",
-    fontWeight: 500,
-    fontSize: "12px",
-    color: "#000",
-  },
-  input: {
-    height: "40px",
-    background: "#F1F6FA",
-    borderRadius: "30px",
-
-    "&:hover, &:focus": {
-      border: `1px solid ${"#173236"}`,
-    },
-  },
+const useStyles = makeStyles((theme: Theme) => ({
   inputRoot: {
     "& > fieldset": {
       border: "none",
@@ -273,6 +286,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: "14px",
     color: "#000",
     border: "none",
+    marginLeft: "5px",
 
     "&::placeholder": {
       fontStyle: "normal",

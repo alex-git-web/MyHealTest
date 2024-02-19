@@ -35,3 +35,5 @@ export type MedicalSpecialistType = {
   lastName: string,
   specialization: string
 }
+
+export type ArchiveRecordType = string

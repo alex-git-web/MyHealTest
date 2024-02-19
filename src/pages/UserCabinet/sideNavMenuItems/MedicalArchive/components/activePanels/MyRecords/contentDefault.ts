@@ -1,4 +1,4 @@
-import { FileCardType, FolderCardType, MedicalSpecialistType } from './types';
+import { ArchiveRecordType, FileCardType, FolderCardType, MedicalSpecialistType } from './types';
 import MedicalSpecialist_1 from '../../../../../../../img/medical_specialists/medical_specialist_1.jpg'
 import MedicalSpecialist_2 from '../../../../../../../img/medical_specialists/medical_specialist_2.jpg'
 import MedicalSpecialist_3 from '../../../../../../../img/medical_specialists/medical_specialist_3.jpg'
@@ -175,4 +175,17 @@ export const MedicalSpecialistsDefault: MedicalSpecialistType[] = [
     lastName: "Бойко",
     specialization: "Психолог"
   },
+]
+
+
+
+export const ArchiveRecordsDefault: ArchiveRecordType[] = [
+  "Аналіз крові",
+  "Динаміка здоровя (Температура)",
+  "Динаміка здоровя (Аналіз крові)",
+  "Динаміка здоровя (Температура)",
+  "Комп'ютерна томографія",
+  "Рекомендації щодо лікування",
+  "МРТ колінного суглоба",
+  "УЗД м'яких тканин",
 ]
