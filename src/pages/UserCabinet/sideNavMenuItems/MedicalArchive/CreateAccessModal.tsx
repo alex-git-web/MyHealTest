@@ -223,8 +223,6 @@ export const CreateAccessModal = (props: Props) => {
             )}
             renderValue={(selected: any) => {
               return selected.map((i: any) => JSON.parse(i).title).join(", ");
-              // return selected.map((i: any) => JSON.parse(i)); // selected.join(", ");
-              return null;
             }}
             multiple={true}
             selectedValues={
@@ -233,7 +231,6 @@ export const CreateAccessModal = (props: Props) => {
                 : []
             }
             setSelectedValues={(value: string[]) => {
-              // console.log(value.map((i) => JSON.parse(i)));
               return setSelectedValues((state: any) => {
                 return {
                   ...state,

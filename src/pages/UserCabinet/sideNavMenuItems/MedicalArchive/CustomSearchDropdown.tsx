@@ -71,10 +71,10 @@ export const CustomSearchDropdown = (props: Props) => {
   }, []);
 
   const displayedOptions = useMemo(() => {
-    return allOptions;
-    // return allOptions.filter((option) =>
-    //   containsText(JSON.stringify(option), searchText)
-    // );
+    // return allOptions;
+    return allOptions.filter((option) =>
+      containsText(JSON.stringify(option), searchText)
+    );
   }, [searchText, allOptions]);
 
   const handleChange = (event: SelectChangeEvent<typeof selectedValues>) => {
