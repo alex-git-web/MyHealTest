@@ -36,4 +36,6 @@ export type MedicalSpecialistType = {
   specialization: string
 }
 
-export type ArchiveRecordType = string
+export type ArchiveRecordType = {
+  title: string
+}

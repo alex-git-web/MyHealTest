@@ -70,26 +70,20 @@ export const CustomSearchDropdown = (props: Props) => {
     return menuItems.map((i) => JSON.stringify(i));
   }, []);
 
-  const displayedOptions = useMemo(
-    () =>
-      allOptions.filter((option) =>
-        containsText(JSON.stringify(option), searchText)
-      ),
-    [searchText]
-  );
+  const displayedOptions = useMemo(() => {
+    return allOptions;
+    // return allOptions.filter((option) =>
+    //   containsText(JSON.stringify(option), searchText)
+    // );
+  }, [searchText, allOptions]);
 
   const handleChange = (event: SelectChangeEvent<typeof selectedValues>) => {
     const {
       target: { value },
     } = event;
 
-    setSelectedValues(
-      !multiple
-        ? [event.target.value as string]
-        : // On autofill we get a stringified value.
-        typeof value === "string"
-        ? value.split(",")
-        : value
+    return setSelectedValues(
+      typeof value === "string" ? JSON.parse(value) : value
     );
   };
 

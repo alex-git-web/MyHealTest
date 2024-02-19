@@ -26,11 +26,12 @@ import {
   ArchiveRecordsDefault,
   MedicalSpecialistsDefault,
 } from "./components/activePanels/MyRecords/contentDefault";
+import { containsText } from "./utils";
 // import { CustomPopper } from '../../../../../shared/CustomPopper';
 
 export type SelectedValuesType = {
-  medicalSpecialist: string;
-  archiveRecords: string[];
+  medicalSpecialist: MedicalSpecialistType | null;
+  archiveRecords: ArchiveRecordType[];
 };
 
 interface Props {
@@ -38,12 +39,13 @@ interface Props {
   setIsOpen: Function;
 }
 
+const a = ["Аналіз крові"];
 export const CreateAccessModal = (props: Props) => {
   const { isOpen, setIsOpen } = props;
   const classes = useStyles();
 
   const [selectedValues, setSelectedValues] = useState<SelectedValuesType>({
-    medicalSpecialist: "",
+    medicalSpecialist: null,
     archiveRecords: [],
   });
   const [isInfoCardOpen, setIsInfoCardOpen] = useState<boolean>(false);
@@ -89,9 +91,6 @@ export const CreateAccessModal = (props: Props) => {
   };
 
   const ArchiveRecordItemContent = ({ item }: { item: ArchiveRecordType }) => {
-    console.log(
-      selectedValues.archiveRecords.filter((str) => str.includes(item))
-    );
     return (
       <Box
         sx={{
@@ -101,8 +100,13 @@ export const CreateAccessModal = (props: Props) => {
           justifyContent: "space-between",
         }}
       >
-        <Checkbox checked={selectedValues.archiveRecords.indexOf(item) > -1} />
-        <ListItemText primary={item} />
+        <Checkbox
+          checked={Array.from(
+            selectedValues.archiveRecords,
+            (i) => i.title
+          ).includes(item.title)}
+        />
+        <ListItemText primary={item.title} />
       </Box>
     );
   };
@@ -177,7 +181,7 @@ export const CreateAccessModal = (props: Props) => {
             </div>
           </Box>
 
-          {/* <CustomSearchDropdown
+          <CustomSearchDropdown
             label={"Фахівець"}
             inputLabel={"Oберіть фахівця"}
             searchInputPlaceholder={"Шукати фахівця"}
@@ -185,28 +189,29 @@ export const CreateAccessModal = (props: Props) => {
             itemComponent={({ item }: { item: MedicalSpecialistType }) => (
               <MedicalSpecialistItemContent item={item} />
             )}
-            renderValue={(selected: string[]) => {
-              return selected
-                .map((i) => {
-                  const { name, lastName }: MedicalSpecialistType =
-                    JSON.parse(i);
-                  return name + " " + lastName;
-                })
-                .join(", ");
+            renderValue={(selected: any) => {
+              const { name, lastName }: MedicalSpecialistType = JSON.parse(
+                selected[0]
+              );
+              return name + " " + lastName;
             }}
-            selectedValues={[selectedValues.medicalSpecialist]}
+            selectedValues={
+              selectedValues.medicalSpecialist
+                ? [JSON.stringify(selectedValues.medicalSpecialist)]
+                : []
+            }
             setSelectedValues={(value: string[]) =>
               setSelectedValues((state: any) => {
                 return {
                   ...state,
-                  medicalSpecialist: value[0],
+                  medicalSpecialist: value,
                 };
               })
             }
             styles={{
               marginBottom: "20px",
             }}
-          /> */}
+          />
 
           <CustomSearchDropdown
             label={"Записи з архіву"}
@@ -216,19 +221,26 @@ export const CreateAccessModal = (props: Props) => {
             itemComponent={({ item }: { item: ArchiveRecordType }) => (
               <ArchiveRecordItemContent item={item} />
             )}
-            renderValue={(selected: string[]) => {
-              return selected.join(", ");
+            renderValue={(selected: any) => {
+              return selected.map((i: any) => JSON.parse(i).title).join(", ");
+              // return selected.map((i: any) => JSON.parse(i)); // selected.join(", ");
+              return null;
             }}
             multiple={true}
-            selectedValues={[...selectedValues.archiveRecords]}
-            setSelectedValues={(value: string[]) =>
-              setSelectedValues((state: any) => {
+            selectedValues={
+              selectedValues.archiveRecords.length
+                ? selectedValues.archiveRecords.map((i) => JSON.stringify(i))
+                : []
+            }
+            setSelectedValues={(value: string[]) => {
+              // console.log(value.map((i) => JSON.parse(i)));
+              return setSelectedValues((state: any) => {
                 return {
                   ...state,
-                  archiveRecords: value,
+                  archiveRecords: value.map((i) => JSON.parse(i)),
                 };
-              })
-            }
+              });
+            }}
           />
         </Box>
       </Modal>
@@ -245,6 +257,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     background: "#fff",
     boxShadow: "0px 10px 40px 0px rgba(23, 50, 54, 0.15)",
     minWidth: "452px",
+    maxWidth: "452px",
     borderRadius: "30px",
     padding: "20px",
     overflow: "auto",
