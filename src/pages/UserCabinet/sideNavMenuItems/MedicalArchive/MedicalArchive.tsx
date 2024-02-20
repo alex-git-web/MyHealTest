@@ -3,6 +3,7 @@ import NavTabsForActivePanel from "./components/NavTabsForActivePanel";
 import MyRecordsActivePanel from "./components/activePanels/MyRecords/MyRecordsActivePanel";
 import LocalStorageActivePanel from "./components/activePanels/LocalStorage/LocalStorageActivePanel";
 import { CreateAccessModal } from "./CreateAccessModal";
+import SortGrid from "./SortGrid";
 
 const MedicalArchive = () => {
   const [activeTabIndex, setActiveTabIndex] = useState<number>(0);
@@ -29,11 +30,7 @@ const MedicalArchive = () => {
           <LocalStorageActivePanel panelTitle={navTabs[activeTabIndex]} />
         )
       )}
-
-      <CreateAccessModal
-        isOpen={open}
-        setIsOpen={() => setOpen((prev) => !prev)}
-      />
+      <SortGrid />
     </div>
   );
 };

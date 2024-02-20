@@ -39,3 +39,21 @@ export type MedicalSpecialistType = {
 export type ArchiveRecordType = {
   title: string
 }
+
+export type AccessCategoryType =
+  "Усі категорії" |
+  "Динаміка здоров\'я" |
+  "Аналіз крові" |
+  "Рекомендації щодо лікування" |
+  "УЗД" |
+  "МРТ" |
+  "Рентген" |
+  "Комп\'ютерна томографія" |
+  "Аналіз калу"
+
+export type AccessRecordType = {
+  id: number,
+  medicalSpecialist: MedicalSpecialistType,
+  categoryType: AccessCategoryType[],
+  validity: string,
+}

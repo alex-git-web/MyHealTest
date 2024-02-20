@@ -1,4 +1,4 @@
-import { ArchiveRecordType, FileCardType, FolderCardType, MedicalSpecialistType } from './types';
+import { AccessRecordType, ArchiveRecordType, FileCardType, FolderCardType, MedicalSpecialistType } from './types';
 import MedicalSpecialist_1 from '../../../../../../../img/medical_specialists/medical_specialist_1.jpg'
 import MedicalSpecialist_2 from '../../../../../../../img/medical_specialists/medical_specialist_2.jpg'
 import MedicalSpecialist_3 from '../../../../../../../img/medical_specialists/medical_specialist_3.jpg'
@@ -185,4 +185,105 @@ export const ArchiveRecordsDefault: ArchiveRecordType[] = [
   { title: "Рекомендації щодо лікування" },
   { title: "МРТ колінного суглоба" },
   { title: "УЗД м'яких тканин" },
+]
+
+export const AccessRecordsDefault: AccessRecordType[] = [
+  {
+    id: 1,
+    medicalSpecialist: {
+      photo: MedicalSpecialist_1,
+      name: "Олександр",
+      lastName: "Білишко",
+      specialization: "Трихолог",
+    },
+    categoryType: ['Усі категорії'],
+    validity: "27.11.2023 - 22.01.2024",
+  },
+  {
+    id: 2,
+    medicalSpecialist: {
+      photo: MedicalSpecialist_3,
+      name: "Ірина",
+      lastName: "Василькова",
+      specialization: "Дерматолог",
+    },
+    categoryType: ['Динаміка здоров\'я', 'Аналіз крові'],
+    validity: "12.10.2023 - 26.04.2024",
+  },
+  {
+    id: 3,
+    medicalSpecialist: {
+      photo: MedicalSpecialist_2,
+      name: "Олександр",
+      lastName: "Бойко",
+      specialization: "Психолог",
+    },
+    categoryType: ['Усі категорії'],
+    validity: "06.09.2023 - 10.03.2024",
+  },
+  {
+    id: 4,
+    medicalSpecialist: {
+      photo: MedicalSpecialist_5,
+      name: "Олена",
+      lastName: "Тепла",
+      specialization: "Терапевт",
+    },
+    categoryType: ['Рекомендації щодо лікування'],
+    validity: "01.10.2023 - 01.04.2024",
+  },
+  {
+    id: 5,
+    medicalSpecialist: {
+      photo: MedicalSpecialist_6,
+      name: "Світлана",
+      lastName: "Коханенко",
+      specialization: "Сімейний лікар",
+    },
+    categoryType: ['Усі категорії'],
+    validity: "08.07.2023 - 22.09.2024",
+  },
+  {
+    id: 6,
+    medicalSpecialist: {
+      photo: MedicalSpecialist_2,
+      name: "Юрій",
+      lastName: "Засєда",
+      specialization: "Кардіолог",
+    },
+    categoryType: ['УЗД', 'МРТ', 'Рентген', 'Комп\'ютерна томографія'],
+    validity: "01.11.2023 - 10.07.2024",
+  },
+  {
+    id: 7,
+    medicalSpecialist: {
+      photo: MedicalSpecialist_6,
+      name: "Катерина",
+      lastName: "Гордон",
+      specialization: "Трихолог",
+    },
+    categoryType: ['Усі категорії'],
+    validity: "29.05.2023 - 12.01.2024",
+  },
+  {
+    id: 8, medicalSpecialist: {
+      photo: MedicalSpecialist_1,
+      name: "Олександр",
+      lastName: "Білишко",
+      specialization: "Трихолог",
+    },
+    categoryType: ['Динаміка здоров\'я'],
+    validity: "02.09.2023 - 14.02.2024",
+  },
+  {
+    id: 9,
+    medicalSpecialist: {
+      photo: MedicalSpecialist_2,
+      name: "Олександр",
+      lastName: "Бойко",
+      specialization: "Психолог",
+    },
+    categoryType: ['Аналіз крові', 'Аналіз калу'],
+    validity: "28.03.2023 - 28.01.2024",
+  },
 ]
