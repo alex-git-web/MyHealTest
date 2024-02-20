@@ -82,8 +82,12 @@ export const CustomSearchDropdown = (props: Props) => {
       target: { value },
     } = event;
 
+    console.log(typeof value === "string");
+    console.log(value);
     return setSelectedValues(
-      typeof value === "string" ? JSON.parse(value) : value
+      typeof value === "string"
+        ? JSON.parse(value)
+        : value.map((i) => JSON.parse(i))
     );
   };
 
@@ -120,6 +124,25 @@ export const CustomSearchDropdown = (props: Props) => {
                 marginTop: "6px",
                 borderRadius: "10px",
                 maxHeight: "25vh",
+
+                // overflow: "auto",
+                // scrollbarWidth: "none",
+                // msOverflowStyle: "none",
+
+                // "::-webkit-scrollbar": {
+                //   display: "none",
+                // },
+
+                "&::-webkit-scrollbar": {
+                  width: "0.4em",
+                },
+                "&::-webkit-scrollbar-track": {
+                  "-webkit-box-shadow": "inset 0 0 6px rgba(0,0,0,0.00)",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  backgroundColor: "#173236",
+                  borderRadius: "30px",
+                },
               },
               "& .MuiMenuItem-root": {
                 height: "max-content",
@@ -149,7 +172,9 @@ export const CustomSearchDropdown = (props: Props) => {
           renderValue={(selected) => {
             // This prevents rendering empty string in Select's value
             // if search text would exclude currently selected option.
-            return !renderValue ? selected : renderValue(selected);
+            return !renderValue
+              ? selected
+              : renderValue(selected.map((i) => JSON.parse(i)));
           }}
           IconComponent={(props) => (
             <KeyboardArrowDownOutlinedIcon
@@ -216,9 +241,14 @@ export const CustomSearchDropdown = (props: Props) => {
               }}
             />
           </ListSubheader>
+
           {displayedOptions.map((option, index) => {
             return (
-              <MenuItem key={index} value={option}>
+              <MenuItem
+                key={index}
+                value={option}
+                sx={{ paddingTop: 0, paddingBottom: 0 }}
+              >
                 {itemComponent({ item: JSON.parse(option) })}
               </MenuItem>
             );

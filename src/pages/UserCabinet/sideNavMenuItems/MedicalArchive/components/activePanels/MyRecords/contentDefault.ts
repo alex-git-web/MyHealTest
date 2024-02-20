@@ -179,9 +179,8 @@ export const MedicalSpecialistsDefault: MedicalSpecialistType[] = [
 
 export const ArchiveRecordsDefault: ArchiveRecordType[] = [
   { title: "Аналіз крові" },
-  { title: "Динаміка здоровя (Температура)" },
-  { title: "Динаміка здоровя (Аналіз крові)" },
-  { title: "Динаміка здоровя (Температура)" },
+  { title: "Динаміка здоров\'я (Температура)" },
+  { title: "Динаміка здоров\'я (Аналіз крові)" },
   { title: "Комп'ютерна томографія" },
   { title: "Рекомендації щодо лікування" },
   { title: "МРТ колінного суглоба" },

@@ -5,6 +5,7 @@ import Modal from "@mui/material/Modal";
 import {
   Button,
   Checkbox,
+  ListItem,
   ListItemText,
   MenuItem,
   Popover,
@@ -78,7 +79,7 @@ export const CreateAccessModal = (props: Props) => {
       item;
 
     return (
-      <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+      <CustomListItem sx={{ justifyContent: "flex-start" }}>
         <DoctorAvatar src={photo} alt="User avatar" />
 
         <Stack sx={{ flexDirection: "column" }}>
@@ -86,28 +87,29 @@ export const CreateAccessModal = (props: Props) => {
 
           <DoctorSpecialization>{specialization}</DoctorSpecialization>
         </Stack>
-      </Box>
+      </CustomListItem>
     );
   };
 
   const ArchiveRecordItemContent = ({ item }: { item: ArchiveRecordType }) => {
     return (
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
+      <CustomListItem>
+        <CustomListItemText primary={item.title} />
         <Checkbox
+          sx={{
+            width: "20px",
+            height: "20px",
+            color: "#D2E1F5",
+            "&.Mui-checked": {
+              color: "#173236",
+            },
+          }}
           checked={Array.from(
             selectedValues.archiveRecords,
             (i) => i.title
           ).includes(item.title)}
         />
-        <ListItemText primary={item.title} />
-      </Box>
+      </CustomListItem>
     );
   };
 
@@ -190,9 +192,8 @@ export const CreateAccessModal = (props: Props) => {
               <MedicalSpecialistItemContent item={item} />
             )}
             renderValue={(selected: any) => {
-              const { name, lastName }: MedicalSpecialistType = JSON.parse(
-                selected[0]
-              );
+              const { name, lastName }: MedicalSpecialistType = selected[0];
+
               return name + " " + lastName;
             }}
             selectedValues={
@@ -200,14 +201,14 @@ export const CreateAccessModal = (props: Props) => {
                 ? [JSON.stringify(selectedValues.medicalSpecialist)]
                 : []
             }
-            setSelectedValues={(value: string[]) =>
-              setSelectedValues((state: any) => {
+            setSelectedValues={(value: MedicalSpecialistType) => {
+              return setSelectedValues((state: any) => {
                 return {
                   ...state,
                   medicalSpecialist: value,
                 };
-              })
-            }
+              });
+            }}
             styles={{
               marginBottom: "20px",
             }}
@@ -222,7 +223,10 @@ export const CreateAccessModal = (props: Props) => {
               <ArchiveRecordItemContent item={item} />
             )}
             renderValue={(selected: any) => {
-              return selected.map((i: any) => JSON.parse(i).title).join(", ");
+              return Array.from(
+                selected,
+                (i: ArchiveRecordType) => i.title
+              ).join(", ");
             }}
             multiple={true}
             selectedValues={
@@ -230,11 +234,11 @@ export const CreateAccessModal = (props: Props) => {
                 ? selectedValues.archiveRecords.map((i) => JSON.stringify(i))
                 : []
             }
-            setSelectedValues={(value: string[]) => {
+            setSelectedValues={(value: ArchiveRecordType[]) => {
               return setSelectedValues((state: any) => {
                 return {
                   ...state,
-                  archiveRecords: value.map((i) => JSON.parse(i)),
+                  archiveRecords: value,
                 };
               });
             }}
@@ -244,6 +248,24 @@ export const CreateAccessModal = (props: Props) => {
     </div>
   );
 };
+
+export const CustomListItem = styled(ListItem)(({ theme }) => ({
+  width: "100%",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  padding: "10px 0px",
+}));
+
+export const CustomListItemText = styled(ListItemText)(({ theme }) => ({
+  "& .MuiTypography-root": {
+    color: "#000",
+    fontSize: "14px",
+    fontStyle: "normal",
+    fontWeight: 500,
+  },
+}));
 
 const useStyles = makeStyles((theme: Theme) => ({
   modalContainer: {
