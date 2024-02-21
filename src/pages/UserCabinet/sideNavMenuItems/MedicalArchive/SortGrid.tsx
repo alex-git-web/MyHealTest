@@ -1,5 +1,5 @@
 import * as React from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import { Box, Stack, Theme, Typography, styled } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { AccessRecordsDefault } from "./components/activePanels/MyRecords/contentDefault";
@@ -9,6 +9,10 @@ import {
   DoctorFullName,
   DoctorSpecialization,
 } from "./CreateAccessModal";
+import CustomButton from "./CustomButton";
+import MessageIconSvg from "img/MessageIconSvg";
+import EditIconSvg from "img/EditIconSvg";
+import RemoveIconSvg from "img/RemoveIconSvg";
 
 export default function SortGrid() {
   const classes = useStyles();
@@ -18,7 +22,6 @@ export default function SortGrid() {
       field: "medicalSpecialist",
       headerName: "Лікар",
       flex: 1,
-      minWidth: 200,
       renderCell: (params: any) => {
         const { value }: { value: MedicalSpecialistType } = params;
 
@@ -51,8 +54,7 @@ export default function SortGrid() {
     {
       field: "categoryType",
       headerName: "Категорія записів",
-      flex: 1,
-      minWidth: 200,
+      flex: 2.5,
       sortable: false,
       renderCell: (params: any) => {
         const { value }: { value: string[] } = params;
@@ -83,7 +85,6 @@ export default function SortGrid() {
       field: "validity",
       headerName: "Діє в період",
       flex: 1,
-      minWidth: 300,
       renderCell: (params: any) => (
         <Typography
           sx={{
@@ -100,11 +101,43 @@ export default function SortGrid() {
       ),
       sortComparator: (v1: any, v2: any) => v1.localeCompare(v2),
     },
+    {
+      field: "actions",
+      type: "actions",
+      headerName: "Actions",
+      width: 150,
+      cellClassName: "actions",
+      getActions: ({}) => {
+        return [
+          <GridActionsCellItem
+            icon={<MessageIconSvg />}
+            label=""
+            onClick={() => console.log("Click!")}
+            className={classes.actionButton}
+          />,
+          <GridActionsCellItem
+            icon={<EditIconSvg />}
+            label=""
+            onClick={() => console.log("Click!")}
+            className={classes.actionButton}
+          />,
+          <GridActionsCellItem
+            icon={<RemoveIconSvg />}
+            label=""
+            onClick={() => console.log("Click!")}
+            className={classes.actionButton}
+          />,
+        ];
+      },
+    },
   ];
 
   return (
     <div className={classes.root}>
       <DataGrid
+        getRowHeight={() => "auto"}
+        getEstimatedRowHeight={() => 60}
+        disableColumnMenu
         rows={AccessRecordsDefault}
         columns={columns}
         initialState={{
@@ -114,10 +147,33 @@ export default function SortGrid() {
         }}
         sx={{
           border: "none",
+          flex: 1,
+
           "& .MuiDataGrid-row": {
             background: "#fff",
-            borderRadius: "30px",
+            borderRadius: "20px",
             marginBottom: "10px",
+            border: "none",
+            padding: "10px 0",
+          },
+
+          // Neutralize the hover colour (causing a flash)
+          "& .MuiDataGrid-row.Mui-hovered": {
+            background: "#fff",
+          },
+          // Take out the hover colour
+          "& .MuiDataGrid-row:hover": {
+            background: "#fff",
+          },
+
+          "&>.MuiDataGrid-main": {
+            "&>.MuiDataGrid-columnHeaders": {
+              borderBottom: "none",
+            },
+
+            "& div div div div >.MuiDataGrid-cell": {
+              borderBottom: "none",
+            },
           },
         }}
       />
@@ -136,6 +192,11 @@ const useStyles = makeStyles(() => ({
   lighterText: {
     fontWeight: 400,
     color: "dimgray",
+  },
+  actionButton: {
+    border: "1px solid #E5EEFF",
+    width: "40px",
+    height: "40px",
   },
 }));
 
